@@ -1,50 +1,128 @@
-# 테마 36개
+# Themes catalog
 
-테마는 `assets/themes/이름.css`의 공통 변수를 바꿉니다. 전체 템플릿의 구조와는 별개이며, 자체 색상을 고정한 템플릿에서는 변경이 제한될 수 있습니다.
+Every theme is a short CSS file in `assets/themes/` that overrides tokens
+defined in `assets/base.css`. Switch themes by changing the `href` of
+`<link id="theme-link">` or by pressing **T** if the deck has a
+`data-themes="a,b,c"` attribute on `<body>` or `<html>`.
 
-| 식별자 | 한국어 이름 | 분위기 | 권장 용도 |
-|---|---|---|---|
-| `minimal-white` | 미니멀 화이트 | 흰 바탕과 절제된 강조 | 간결한 보고, 본문 중심 발표 |
-| `editorial-serif` | 에디토리얼 | 종이색 바탕과 적갈색 강조 | 독서 세미나, 인문학, 긴 글의 논증 |
-| `soft-pastel` | 소프트 파스텔 | 부드러운 파스텔색 | 가벼운 교육, 생활 주제 |
-| `sharp-mono` | 강한 흑백 | 흑백 대비와 굵은 제목 | 짧고 강한 메시지 |
-| `arctic-cool` | 차분한 청색 | 파랑과 회색 | 분석 보고, 수치 설명 |
-| `sunset-warm` | 따뜻한 노을 | 주황과 산호색 | 행사, 경험 나눔 |
-| `catppuccin-latte` | 라테 | 부드러운 밝은 배색 | 기술 교육, 워크숍 |
-| `catppuccin-mocha` | 모카 | 차분한 어두운 배색 | 개발자 발표 |
-| `dracula` | 드라큘라 | 보라색이 강조된 어두운 화면 | 코드 설명 |
-| `tokyo-night` | 도쿄 나이트 | 짙은 남색과 청색 | 기술 발표, 시스템 소개 |
-| `nord` | 노르드 | 차가운 청회색 | 기술 보고 |
-| `solarized-light` | 솔라라이즈드 라이트 | 눈부심을 줄인 밝은 배색 | 긴 강의와 워크숍 |
-| `gruvbox-dark` | 그루브박스 다크 | 갈색 계열의 어두운 배색 | 터미널과 개발 도구 |
-| `rose-pine` | 로즈 파인 | 은은한 어두운 보라색 | 디자인과 기술 |
-| `neo-brutalism` | 네오 브루탈리즘 | 굵은 테두리와 노란 강조 | 개성 있는 기획 발표 |
-| `glassmorphism` | 반투명 유리 | 반투명 패널과 빛 효과 | 제품 소개 |
-| `bauhaus` | 바우하우스 | 기하학적 구성과 원색 | 디자인, 예술 |
-| `swiss-grid` | 스위스 그리드 | 격자와 정렬을 강조 | 정돈된 비교, 구조 설명 |
-| `terminal-green` | 초록 터미널 | 초록 글자와 어두운 배경 | 명령줄 도구 소개 |
-| `xiaohongshu-white` | 화이트 에디토리얼 | 흰 바탕과 따뜻한 붉은 강조 | 카드뉴스와 생활 콘텐츠 |
-| `rainbow-gradient` | 무지개 그라데이션 | 여러 색의 그라데이션 | 축하와 행사 |
-| `aurora` | 오로라 | 빛이 번지는 그라데이션 | 표지와 마무리 |
-| `blueprint` | 청사진 | 짙은 파란 격자 | 시스템 구조 |
-| `memphis-pop` | 멤피스 팝 | 점 무늬와 큰 제목 | 청년 행사, 디자인 |
-| `cyberpunk-neon` | 사이버펑크 네온 | 검정과 선명한 네온색 | 기술 시연 |
-| `y2k-chrome` | Y2K 크롬 | 금속 느낌과 무지개 강조 | 패션과 트렌드 |
-| `retro-tv` | 레트로 TV | 따뜻한 배경과 주사선 | 회고와 이야기 |
-| `japanese-minimal` | 아이보리 미니멀 | 아이보리와 주홍색, 넓은 여백 | 차분한 이야기 |
-| `vaporwave` | 베이퍼웨이브 | 보라색과 분홍·청록 | 음악과 시각예술 |
-| `midcentury` | 미드센추리 | 겨자색과 청록·주황 | 디자인과 문화 |
-| `corporate-clean` | 정돈된 보고 | 흰색과 남색 | 사역 보고, 회의, 계획 |
-| `academic-paper` | 학술 발표 | 흰 바탕과 검정·파랑 | 신학 연구, 논문 비교 |
-| `news-broadcast` | 뉴스 브리핑 | 붉은 강조선과 굵은 제목 | 짧은 현황 보고 |
-| `pitch-deck-vc` | 기획 제안 | 흰 바탕과 청보라 강조 | 기획안과 제안서 |
-| `magazine-bold` | 매거진 볼드 | 종이색과 큰 제목 | 주제 강연과 이야기 |
-| `engineering-whiteprint` | 화이트 설계도 | 밝은 격자와 남색 | 과정·구조·설계 설명 |
+All themes define the same variables: `--bg`, `--bg-soft`, `--surface`,
+`--surface-2`, `--border`, `--text-1/2/3`, `--accent`, `--accent-ink`, `--accent-2/3`,
+`--good`, `--warn`, `--bad`, `--grad`, `--grad-soft`, `--radius*`, `--shadow*`,
+`--font-sans`, `--font-display`.
 
-## 적용
+### `--accent-ink` — the text colour on an accent fill
 
-테마 링크에는 `id="theme-link"`를 둡니다. `<html data-themes="editorial-serif,academic-paper,minimal-white">`를 지정하면 T로 순환합니다. 테마 다음에 `korean.css`를 연결하면 한글 글꼴을 유지할 수 있습니다.
+Anything that paints text *on top of* `--accent` (a filled button, a numbered
+badge, a highlighted tag) must use `--accent-ink` for its `color`, never a
+hardcoded `#fff` or `#000`. Accents across these 36 themes run from `#ffffff`
+(`blueprint`) to `#000000` (`sharp-mono`), so no single literal is readable
+against all of them: `#0b1024` on `minimal-white`'s near-black accent measured
+**1.01:1** — invisible, and the layout still looked fine at a glance.
 
-강조색 배경의 텍스트에는 `--accent-ink`를 사용합니다. `--accent`의 밝기가 테마마다 달라 흰색이나 검정색을 고정하면 읽기 어려워질 수 있습니다.
+Each theme sets `--accent-ink` to whichever of white / near-black clears WCAG
+AA against its own accent. The tightest in the set is `y2k-chrome` at 4.54:1;
+every other theme is higher. The `:root` fallback in `base.css` — what you get
+with no theme linked — is `#000000`, which measures 4.77:1 against the default
+`--accent` (white would be 4.40:1, below AA).
 
-새 테마는 기존 파일을 복사하고 필요한 변수만 바꿉니다. `--accent-ink`와 본문 대비를 함께 확인합니다. 각 테마의 원래 영문 식별자는 파일 경로와 호환성을 위해 유지합니다.
+```css
+.my-badge{background:var(--accent);color:var(--accent-ink)}
+```
+
+If you add a theme, add `--accent-ink` with it.
+
+## Light & calm
+
+| name | description | when to use |
+|---|---|---|
+| `minimal-white` | 极简白，克制高级。Inter，强文字层级，极低阴影。 | 内部汇报、一对一技术评审、不抢内容的严肃话题 |
+| `editorial-serif` | 杂志风 Playfair 衬线 + 奶油底。 | 品牌故事、文字密度大的长文演讲 |
+| `soft-pastel` | 柔和马卡龙三色渐变。 | 产品发布、面向消费者、轻松话题 |
+| `xiaohongshu-white` | 小红书白底 + 暖红 accent + 衬线标题。 | 小红书图文、生活/美学类内容 |
+| `solarized-light` | 经典低眩光配色。 | 长时间观看的工作坊、教学 |
+| `catppuccin-latte` | catppuccin 浅色。 | 开发者、极客友好的技术分享 |
+
+## Bold & statement
+
+| name | description | when to use |
+|---|---|---|
+| `sharp-mono` | 纯黑白 + Archivo Black + 硬阴影。 | 宣言类、极具冲击力的视觉 |
+| `neo-brutalism` | 厚描边、硬阴影、明黄 accent。 | 创业路演、敢说敢做的调性 |
+| `bauhaus` | 几何 + 红黄蓝原色。 | 设计 talk、艺术史/产品美学主题 |
+| `swiss-grid` | 瑞士网格 + Helvetica 感 + 12 栏底纹。 | 严肃排版、设计行业 |
+| `memphis-pop` | 孟菲斯波普背景点 + 大字标题。 | 年轻、潮流、品牌合作 |
+
+## Cool & dark
+
+| name | description | when to use |
+|---|---|---|
+| `catppuccin-mocha` | catppuccin 深。 | 开发者内部分享、长时间观看 |
+| `dracula` | 经典 Dracula 紫红主色。 | 代码密集的技术分享 |
+| `tokyo-night` | Tokyo Night 蓝夜。 | 偏冷技术分享、基础设施 |
+| `nord` | 北欧清冷蓝白。 | 基础设施、云产品 |
+| `gruvbox-dark` | 温暖复古深色。 | Terminal / vim / *nix 社群 |
+| `rose-pine` | 玫瑰松，柔和暗色。 | 设计+开发交界、审美向技术 |
+| `arctic-cool` | 蓝/青/石板灰 浅色版。 | 商业分析、金融、冷静理性 |
+
+## Warm & vibrant
+
+| name | description | when to use |
+|---|---|---|
+| `sunset-warm` | 橘 / 珊瑚 / 琥珀三色渐变。 | 生活方式、奖项颁发、情绪正向 |
+
+## Effect-heavy
+
+| name | description | when to use |
+|---|---|---|
+| `glassmorphism` | 毛玻璃 + 多色光斑背景。 | Apple 式发布会、产品特性展示 |
+| `aurora` | 极光渐变 + blur + saturate。 | 封面 / CTA / 结语页 |
+| `rainbow-gradient` | 白底 + 彩虹流动渐变 accent。 | 欢乐向、节日、庆祝页 |
+| `blueprint` | 蓝图工程 + 网格底纹 + 蒙太奇字体。 | 系统架构、工程蓝图 |
+| `terminal-green` | 绿屏终端 + 等宽 + 发光文字。 | CLI/black-hat/复古朋克 |
+
+## v2 additions
+
+### Light & professional
+
+| name | description | when to use |
+|---|---|---|
+| `corporate-clean` | 纯白 + 海军蓝 accent + Inter + 保守边框。 | 董事会汇报、B2B 销售、金融保险 |
+| `pitch-deck-vc` | YC 风白底 + 蓝紫渐变 accent + 大留白。 | 融资路演、种子轮、VC meeting |
+| `academic-paper` | 论文白 + 衬线正文 + 黑墨 + 蓝链接。 | 学术报告、研究分享、会议论文 |
+| `japanese-minimal` | 象牙白 + 朱红 accent + 极大留白 + Noto Serif。 | 品牌升级、匠人故事、禅意叙事 |
+| `engineering-whiteprint` | 白底 + 坐标纸网格 + 海军墨线 + 等宽字。 | 系统设计、API 文档、架构白皮书 |
+
+### Bold & editorial
+
+| name | description | when to use |
+|---|---|---|
+| `magazine-bold` | 奶油底 + 超大 Playfair 衬线 + 橙色 spot。 | 专栏文章、封面故事、品牌月刊 |
+| `news-broadcast` | 白底 + 红色竖条 + Oswald 大写 + 硬阴影。 | 突发新闻、发布通稿、数据播报 |
+| `midcentury` | 奶油底 + 芥末/青/焦橙 + 锐利几何。 | 设计史、家居美学、复古品牌 |
+| `retro-tv` | 暖奶油 + CRT 扫描线 + 琥珀橙 accent。 | 怀旧叙事、八零九零年代主题 |
+
+### Effect-heavy / dramatic
+
+| name | description | when to use |
+|---|---|---|
+| `cyberpunk-neon` | 纯黑 + 霓虹粉青黄 + 发光 + JetBrains Mono。 | 黑客、地下文化、赛博 talk |
+| `vaporwave` | 深紫 + 粉红青蓝渐变 + 晕染光斑。 | 音乐、潮流艺术、A E S T H E T I C |
+| `y2k-chrome` | 银铬渐变 + 彩虹 accent + 大圆角 + Space Grotesk。 | 千禧怀旧、时尚品牌、Gen-Z |
+
+## How to apply
+
+```html
+<link rel="stylesheet" id="theme-link" href="../assets/themes/aurora.css">
+```
+
+Or enable `T`-cycling by listing themes on the body:
+
+```html
+<body data-themes="minimal-white,aurora,catppuccin-mocha" data-theme-base="../assets/themes/">
+```
+
+## How to extend
+
+Copy an existing theme, rename it, and override only the variables you want to
+change. Keep each theme under ~200 lines. Prefer adjusting tokens to adding
+new selectors.

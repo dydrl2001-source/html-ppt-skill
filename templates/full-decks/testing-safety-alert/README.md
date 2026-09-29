@@ -1,15 +1,11 @@
-# 위험과 점검
+# testing-safety-alert
 
-식별자: `testing-safety-alert`. 기본 8장. 권장 용도: 안전·회고.
+白底 + 红琥珀警示色 + 条纹危险边 + 大红 strike 和 pill。灵感来自 `20260412-AI测试与安全/xhs-ai-testing-safety-v2.html` 的 `.focus` 黑底白字块、hero quote box 和高对比 black-on-white 气质 —— 但把语气推到「警示 / 风控 / 事故报告」层级。
 
-경고색, 위험 수준, 점검 목록.
+**Visual traits:** 顶部 45° 红黑斜条纹警示带、底部副条纹、`strike-through` 红色斜切的否定大字、L1/L2/L3 三档色卡 (绿/琥珀/红)、圆形前置指示灯 alert-box、policy-yaml 深色代码块带红色左边框 + `bad` 关键词高亮、红/绿复选框 checklist、Q1 事故柱状图。
 
-```bash
-bash scripts/new-deck.sh my-talk -t testing-safety-alert
-```
+**Use when:** 讲安全 / 风控 / 事故复盘 / 红队测试 / AI 上线前评估 / policy as code；你需要让观众立刻感到「这事严肃，别马虎」。
 
-`index.html`의 내용을 바꾸고 `style.css`의 전용 클래스를 유지하세요. 기본 예시를 복사한 뒤 실제 내용과 출처로 교체합니다. 한국어 작성 시 문서에 `lang="ko"`를 지정하고 테마 및 전용 CSS 다음에 `../../../assets/korean.css`를 연결합니다. 출력 폴더에서는 생성 스크립트가 계산한 공통 파일 경로를 사용합니다.
+**Source inspiration:** `20260412-AI测试与安全/html/xhs-ai-testing-safety-v2.html`.
 
-← → 페이지 이동 · S 발표자 창 · N 노트 · F 전체 화면 · O 전체 보기.
-
-[원본 설명](README.en.md) · [전체 템플릿 안내](../../../references/full-decks.md)
+**Path:** `templates/full-decks/testing-safety-alert/index.html`

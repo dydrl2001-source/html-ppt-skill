@@ -1,15 +1,11 @@
-# 논증과 구조
+# knowledge-arch-blueprint
 
-식별자: `knowledge-arch-blueprint`. 기본 8장. 권장 용도: 연구·설계.
+奶油纸 (`#F0EAE0`) 底 + 锈红 (`#B5392A`) 单一 accent + 硬黑描边卡片 + 虚线反馈回路箭头。灵感来自 `20260405 架构图v2.html` —— 那是一张真正的「技术白皮书架构图」，像建筑蓝图。
 
-종이색 격자, 과정과 관계 설명.
+**Visual traits:** 暖米色纸底、微弱 48px 网格做 blueprint 感、硬朗 2px 黑边卡片、pipeline step-box 一字排开配 hero box 凸起、右上 insight 红色 callout、大小写 kicker 2.5-4px 字距、SVG 反馈回路虚线 + 箭头、Playfair 大字号衬线数据、无渐变无阴影极度克制。
 
-```bash
-bash scripts/new-deck.sh my-talk -t knowledge-arch-blueprint
-```
+**Use when:** 讲系统架构、数据流向、流程拆解；你想让内容看起来像一份正经技术白皮书而不是营销贴；需要严肃感、印刷感、可直接截图塞进 README。
 
-`index.html`의 내용을 바꾸고 `style.css`의 전용 클래스를 유지하세요. 기본 예시를 복사한 뒤 실제 내용과 출처로 교체합니다. 한국어 작성 시 문서에 `lang="ko"`를 지정하고 테마 및 전용 CSS 다음에 `../../../assets/korean.css`를 연결합니다. 출력 폴더에서는 생성 스크립트가 계산한 공통 파일 경로를 사용합니다.
+**Source inspiration:** `20260405-Karpathy-知识库/20260405 架构图v2.html`.
 
-← → 페이지 이동 · S 발표자 창 · N 노트 · F 전체 화면 · O 전체 보기.
-
-[원본 설명](README.en.md) · [전체 템플릿 안내](../../../references/full-decks.md)
+**Path:** `templates/full-decks/knowledge-arch-blueprint/index.html`

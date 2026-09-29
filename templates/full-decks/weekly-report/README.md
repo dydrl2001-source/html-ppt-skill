@@ -1,15 +1,8 @@
-# 주간 보고
+# weekly-report · 周报
 
-식별자: `weekly-report`. 기본 7장. 권장 용도: 사역·업무.
+7-slide team weekly report: cover (week range), KPI grid, shipped items, a metric trend chart, blockers, next-week plan, thanks.
 
-지표, 진행 내용, 다음 계획.
+Corporate-clarity palette: near-white background, blue→teal accent, ruled dividers and tiny mono tags (`FEAT`, `FIX`, `EXP`, `INFRA`). Data-dense, readable at a glance, and easy to skim in a standup.
 
-```bash
-bash scripts/new-deck.sh my-talk -t weekly-report
-```
-
-`index.html`의 내용을 바꾸고 `style.css`의 전용 클래스를 유지하세요. 기본 예시를 복사한 뒤 실제 내용과 출처로 교체합니다. 한국어 작성 시 문서에 `lang="ko"`를 지정하고 테마 및 전용 CSS 다음에 `../../../assets/korean.css`를 연결합니다. 출력 폴더에서는 생성 스크립트가 계산한 공통 파일 경로를 사용합니다.
-
-← → 페이지 이동 · S 발표자 창 · N 노트 · F 전체 화면 · O 전체 보기.
-
-[원본 설명](README.en.md) · [전체 템플릿 안내](../../../references/full-decks.md)
+**Use when:** team weekly readouts, squad reviews, skip-level updates, cross-team "what shipped this week" mails.
+**Feel:** Linear changelog meets a McKinsey KPI deck — serious, measured, actionable.

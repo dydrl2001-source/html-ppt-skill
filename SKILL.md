@@ -1,91 +1,325 @@
 ---
 name: html-ppt
-description: 한국어 HTML 발표자료를 제작합니다. PPT, 슬라이드, 책 요약, 강의, 세미나, 보고서 발표, 발표자 노트 요청에 사용합니다. 36개 테마와 16개 전체 템플릿, 36개 개별 레이아웃을 활용합니다.
+description: HTML PPT Studio — author professional static HTML presentations in many styles, layouts, and animations, all driven by templates. Use when the user asks for a presentation, PPT, slides, keynote, deck, slideshow, "幻灯片", "演讲稿", "做一份 PPT", "做一份 slides", a reveal-style HTML deck, a 小红书 图文, or any kind of multi-slide pitch/report/sharing document that should look tasteful and be usable with keyboard navigation. Triggers include keywords like "presentation", "ppt", "slides", "deck", "keynote", "reveal", "slideshow", "幻灯片", "演讲稿", "分享稿", "小红书图文", "talk slides", "pitch deck", "tech sharing", "technical presentation".
 ---
 
-# HTML PPT 제작 규칙
+# html-ppt — HTML PPT Studio
 
-결과물의 기본 형식은 정적 HTML/CSS/JavaScript입니다. 편집 가능한 PPTX는 별도 도구가 필요하며, 내장 변환이 되는 것처럼 말하지 않습니다.
+Author professional HTML presentations as static files. One theme file = one
+look. One layout file = one page type. One animation class = one entry effect.
+All pages share a token-based design system in `assets/base.css`.
 
-## 제작 전에 질문과 추천안 제시
-
-1. 어떤 내용이며 누구에게 보여줄 것인가?
-2. 발표 시간과 필요한 페이지 수는 얼마인가?
-3. 어떤 템플릿과 테마가 어울리는가?
-4. 발표자 노트, 토론 질문, 인쇄물이 필요한가?
-
-질문만 나열하지 말고 각 질문에 추천안을 함께 제시합니다. 사용자가 이미 답했거나 선택을 맡겼다면 그 권한을 존중하여 가정을 밝히고 진행합니다. 추가 확인을 불필요하게 반복하지 않습니다. 답변에 따라 내용이 크게 바뀌는 필수 정보만 질문합니다.
-
-## 추천 시작점
-
-| 목적 | 템플릿 | 테마 |
-|---|---|---|
-| 독서·연구 세미나 | `book-seminar-ko` | `editorial-serif` 또는 `academic-paper` |
-| 발표자 노트 중심 강연 | `presenter-mode-reveal` | `editorial-serif`, `tokyo-night` |
-| 수업·워크숍 | `course-module` | 템플릿 자체 배색 |
-| 큰 문장 중심 강연 | `dir-key-nav-minimal` | 페이지별 자체 배색 |
-| 주간·사역 보고 | `weekly-report` | 템플릿 자체 배색 |
-
-한국어 시각 비교는 `templates/recommended-ko.html`을 엽니다. 템플릿은 구조, 테마는 공통 디자인 설정입니다. 일부 전체 템플릿의 자체 CSS는 테마를 덮어쓰므로 테마 교체 후 화면을 확인합니다.
-
-## 생성과 내용 작성
+## Install
 
 ```bash
-bash scripts/new-deck.sh my-talk -t book-seminar-ko
-bash scripts/new-deck.sh my-talk ./decks -t presenter-mode-reveal
+npx skills add https://github.com/lewislulu/html-ppt-skill
 ```
 
-- 기존 템플릿과 개별 레이아웃에서 시작합니다. 빈 HTML을 임의로 설계하지 않습니다.
-- 스크립트가 계산한 상대 경로를 보존합니다. 다른 폴더로 이동하면 공통 파일 경로를 검증합니다.
-- 한 논리적 페이지는 `<section class="slide" data-title="제목">` 하나입니다.
-- 페이지마다 청중에게 필요한 논점 하나를 명확히 둡니다. 제목·본문·근거가 연결되도록 작성합니다.
-- 기존 예시 수치와 인명을 실제 자료인 것처럼 사용하지 않습니다.
-- 원문 인용, 저자의 주장 요약, 작성자의 해석과 가상 사례를 구분합니다. 읽지 않은 책이나 확인하지 않은 쪽수를 출처로 쓰지 않습니다.
-- 색상·테두리·간격은 기존 디자인 변수와 구조를 활용합니다. 강조색 배경의 글자는 `var(--accent-ink)`를 사용합니다.
-- `.deck-header`, `.deck-footer`, `.slide-number`의 자리를 침범하지 않습니다.
-- `assets/runtime.js`를 포함하여 방향키, 전체 화면, 발표자 화면, 노트, 전체 보기를 유지합니다.
+One command, no build. Pure static HTML/CSS/JS with only CDN webfonts.
 
-## 한국어
+No network on the target machine? Point the CLI at a local copy
+(`npx skills add ./html-ppt-skill`), or just copy this folder into your agent's
+skills directory — `~/.claude/skills/html-ppt/` for Claude Code. Decks render
+offline; only the webfonts fall back to the system stack. See
+[README.md](README.md#offline--manual-install).
 
-- 문서 언어는 `<html lang="ko">`로 지정합니다. 발표자 UI 언어도 이 값을 따릅니다.
-- 공통·테마·템플릿 CSS 다음에 `assets/korean.css`를 포함합니다.
-- 제목이 길면 문장을 다듬거나 의도적으로 줄을 나눕니다. 글자부터 작게 줄이지 않습니다.
-- 한글은 어절 단위로 줄바꿈하며 긴 URL 등은 필요할 때만 분리합니다.
-- 외국어 고유명사는 필요한 경우에만 병기하고 화면을 불필요한 영어 표제로 채우지 않습니다.
+## What the skill gives you
 
-## 발표자 노트
+- **36 themes** (`assets/themes/*.css`) — minimal-white, editorial-serif, soft-pastel, sharp-mono, arctic-cool, sunset-warm, catppuccin-latte/mocha, dracula, tokyo-night, nord, solarized-light, gruvbox-dark, rose-pine, neo-brutalism, glassmorphism, bauhaus, swiss-grid, terminal-green, xiaohongshu-white, rainbow-gradient, aurora, blueprint, memphis-pop, cyberpunk-neon, y2k-chrome, retro-tv, japanese-minimal, vaporwave, midcentury, corporate-clean, academic-paper, news-broadcast, pitch-deck-vc, magazine-bold, engineering-whiteprint
+- **15 full-deck templates** (`templates/full-decks/<name>/`) — complete multi-slide decks with scoped `.tpl-<name>` CSS. 8 extracted from real-world decks (xhs-white-editorial, graphify-dark-graph, knowledge-arch-blueprint, hermes-cyber-terminal, obsidian-claude-gradient, testing-safety-alert, xhs-pastel-card, dir-key-nav-minimal), 7 scenario scaffolds (pitch-deck, product-launch, tech-sharing, weekly-report, xhs-post 3:4, course-module, **presenter-mode-reveal** — 演讲者模式专用)
+- **36 layouts** (`templates/single-page/*.html`) with realistic demo data, including **5 real-image layouts** (single / full-bleed / image+text / gallery / before-after)
+- **27 CSS animations** (`assets/animations/animations.css`) via `data-anim`
+- **20 canvas FX animations** (`assets/animations/fx/*.js`) via `data-fx` — particle-burst, confetti-cannon, firework, starfield, matrix-rain, knowledge-graph (force-directed), neural-net (pulses), constellation, orbit-ring, galaxy-swirl, word-cascade, letter-explode, chain-react, magnetic-field, data-stream, gradient-blob, sparkle-trail, shockwave, typewriter-multi, counter-explosion
+- **Keyboard runtime** (`assets/runtime.js`) — arrows, T (theme), A (anim), F/O, **S (presenter mode: magnetic-card popup with CURRENT / NEXT / SCRIPT / TIMER cards)**, N (notes drawer), R (reset timer in presenter)
+- **Touch navigation** — swipe left/right to change slides on phones and tablets
+- **FX runtime** (`assets/animations/fx-runtime.js`) — auto-inits `[data-fx]` on slide enter, cleans up on leave
+- **Showcase decks** for themes / layouts / animations / full-decks gallery
+- **Headless Chrome render script** for PNG export
 
-모든 발표용 페이지에 `<aside class="notes">`를 넣습니다. 핵심어를 굵게 표시하고 다음 페이지로 넘어가는 문장을 분리합니다. 노트의 길이는 발표 시간과 한국어 말하기 속도에 맞춥니다. 150–300이라는 원본 언어의 분량 지침을 한국어 단어 수로 기계적으로 적용하지 않습니다.
+## When to use
 
-발표자용 설명과 검증 기록을 청중 화면에 올리지 않습니다. S는 별도 발표자 창, N은 빠른 노트, R은 발표자 창에서 타이머 초기화입니다. 모든 전체 템플릿이 런타임의 발표자 기능을 사용할 수 있습니다.
+Use when the user asks for any kind of slide-based output or wants to turn
+text/notes into a presentable deck. Prefer this over building from scratch.
 
-## 이미지와 로고
+### 🎤 Presenter Mode (演讲者模式 + 逐字稿)
 
-이미지는 `image-single`, `image-full-bleed`, `image-text-split`, `image-gallery`, `image-compare`를 사용합니다. `.img-frame`은 사진을 채워 자르며 `.img-frame.contain`은 전체를 보존합니다. 도표·스크린샷·로고는 자르지 않습니다.
+If the user mentions any of: **演讲 / 分享 / 讲稿 / 逐字稿 / speaker notes / presenter view / 演讲者视图 / 提词器**, or says things like "我要去给团队讲 xxx", "要做一场技术分享", "怕讲不流畅", "想要一份带逐字稿的 PPT" — **use the `presenter-mode-reveal` full-deck template** and write 150–300 words of 逐字稿 in each slide's `<aside class="notes">`.
+
+See [references/presenter-mode.md](references/presenter-mode.md) for the full authoring guide including the 3 rules of speaker script writing:
+1. **不是讲稿，是提示信号** — 加粗核心词 + 过渡句独立成段
+2. **每页 150–300 字** — 2–3 分钟/页的节奏
+3. **用口语，不用书面语** — "因此"→"所以"，"该方案"→"这个方案"
+
+All full-deck templates support the S key presenter mode (it's built into `runtime.js`). **S opens a new popup window with 4 magnetic cards**:
+- 🔵 **CURRENT** — pixel-perfect iframe preview of the current slide
+- 🟣 **NEXT** — pixel-perfect iframe preview of the next slide
+- 🟠 **SPEAKER SCRIPT** — large-font 逐字稿 (scrollable)
+- 🟢 **TIMER** — elapsed time + slide counter + prev/next/reset buttons
+
+Each card is **draggable by its header** and **resizable by the bottom-right corner handle**. Card positions/sizes persist to `localStorage` per deck. A "Reset layout" button restores the default arrangement.
+
+**Why the previews are pixel-perfect**: each preview is an `<iframe>` that loads the actual deck HTML with a `?preview=N` query param; `runtime.js` detects this and renders only slide N with no chrome. So the preview uses the **same CSS, theme, fonts, and viewport as the audience view** — colors and layout are guaranteed identical.
+
+**Smooth navigation**: on slide change, the presenter window sends `postMessage({type:'preview-goto', idx:N})` to each iframe. The iframe just toggles `.is-active` between slides — **no reload, no flicker**. The two windows also stay in sync via `BroadcastChannel`.
+
+Only `presenter-mode-reveal` is designed from the ground up around the feature with proper example 逐字稿 on every slide.
+
+Keyboard in presenter window: `← →` navigate (syncs audience) · `R` reset timer · `Esc` close popup.
+Keyboard in audience window: `S` open presenter · `T` cycle theme · `← →` navigate (syncs presenter) · `F` fullscreen · `O` overview.
+
+## Before you author anything — ALWAYS ask or recommend
+
+**Do not start writing slides until you understand three things.** Either ask
+the user directly, or — if they already handed you rich content — propose a
+tasteful default and confirm.
+
+1. **Content & audience.** What's the deck about, how many slides, who's
+   watching (engineers / execs / 小红书读者 / 学生 / VC)?
+2. **Style / theme.** Which of the 36 themes fits? If unsure, recommend 2-3
+   candidates based on tone:
+   - Business / investor pitch → `pitch-deck-vc`, `corporate-clean`, `swiss-grid`
+   - Tech sharing / engineering → `tokyo-night`, `dracula`, `catppuccin-mocha`,
+     `terminal-green`, `blueprint`
+   - 小红书图文 → `xiaohongshu-white`, `soft-pastel`, `rainbow-gradient`,
+     `magazine-bold`
+   - Academic / report → `academic-paper`, `editorial-serif`, `minimal-white`
+   - Edgy / cyber / launch → `cyberpunk-neon`, `vaporwave`, `y2k-chrome`,
+     `neo-brutalism`
+3. **Starting point.** One of the 15 full-deck templates, or scratch? Point
+   to the closest `templates/full-decks/<name>/` and ask if it fits. If the
+   user's content suggests something obvious (e.g. "我要做产品发布会" →
+   `product-launch`), propose it confidently instead of asking blindly.
+
+A good opening message looks like:
+
+> 我可以给你做这份 PPT！先确认三件事：
+> 1. 大致内容 / 页数 / 观众是谁？
+> 2. 风格偏好？我建议从这 3 个主题里选一个：`tokyo-night`（技术分享默认好看）、`xiaohongshu-white`（小红书风）、`corporate-clean`（正式汇报）。
+> 3. 要不要用我现成的 `tech-sharing` 全 deck 模板打底？
+
+Only after those are clear, scaffold the deck and start writing.
+
+## Quick start
+
+1. **Scaffold a new deck.** From the repo root:
+   ```bash
+   ./scripts/new-deck.sh my-talk
+   open examples/my-talk/index.html
+   ```
+2. **Pick a theme.** Open the deck and press `T` to cycle. Or hard-code it
+   (`../assets/` here is a placeholder — use whatever prefix the rest of the
+   file already uses; `new-deck.sh` has set it to the right depth):
+   ```html
+   <link rel="stylesheet" id="theme-link" href="../assets/themes/aurora.css">
+   ```
+   Catalog in [references/themes.md](references/themes.md).
+3. **Pick layouts.** Copy `<section class="slide">...</section>` blocks out of
+   files in `templates/single-page/` into your deck. Replace the demo data.
+   Catalog in [references/layouts.md](references/layouts.md).
+4. **Add animations.** Put `data-anim="fade-up"` (or `class="anim-fade-up"`) on
+   any element. On `<ul>`/grids, use `anim-stagger-list` for sequenced reveals.
+   For canvas FX, use `<div data-fx="knowledge-graph">...</div>` and include
+   `<script src="../assets/animations/fx-runtime.js"></script>`.
+   Catalog in [references/animations.md](references/animations.md).
+5. **Use a full-deck template.** Scaffold from it, don't copy it by hand —
+   the template's `../../../assets/` is relative to *its own* location, so a
+   manual copy lands the paths at the wrong depth:
+   ```bash
+   ./scripts/new-deck.sh my-talk -t pitch-deck
+   ```
+   Each folder is self-contained with scoped CSS. Catalog in
+   [references/full-decks.md](references/full-decks.md) and gallery at
+   `templates/full-decks-index.html`.
+6. **Render to PNG.**
+   ```bash
+   ./scripts/render.sh templates/theme-showcase.html       # one shot
+   ./scripts/render.sh examples/my-talk/index.html 12      # 12 slides
+   ```
+
+## Authoring rules (important)
+
+- **Always start from a template.** Don't author slides from scratch — copy the
+  closest layout from `templates/single-page/` first, then replace content.
+- **Use tokens, not literal colors.** Every color, radius, shadow should come
+  from CSS variables defined in `assets/base.css` and overridden by a theme.
+  Good: `color: var(--text-1)`. Bad: `color: #111`.
+  Text on top of an `--accent` fill is the one people get wrong: it needs
+  `color: var(--accent-ink)`, because accents here run from `#ffffff` to
+  `#000000` and no literal ink is readable on all of them.
+- **Don't invent new layout files.** Prefer composing existing ones. Only add
+  a new `templates/single-page/*.html` if none of the 36 fit.
+- **Putting images on a slide?** Start from one of the five `image-*` layouts and
+  use `.img-frame` — see *Images* below. Never drop a bare `<img>` into a slide:
+  an unframed image ignores the slide's height and pushes the rest off the page.
+- **Respect chrome slots.** `.deck-header`, `.deck-footer`, `.slide-number`
+  and the progress bar are provided by `assets/base.css` + `runtime.js`.
+- **Add a logo declaratively, once.** Put `data-logo` on `<body>` — don't paste
+  an `<img>` into every slide. See *Custom logo* below.
+- **Keyboard-first.** Always include the runtime, e.g.
+  `<script src="../assets/runtime.js"></script>`, so the deck supports
+  ← → / T / A / F / S / O / hash deep-links.
+- **Never hand-edit the `../` depth in asset paths.** Every `assets/` reference
+  is relative to the file that holds it: `templates/deck.html` uses
+  `../assets/`, `templates/single-page/*.html` use `../../assets/`, and
+  `templates/full-decks/*/index.html` use `../../../assets/`. Copying a file to
+  a new depth silently breaks all of them. Scaffold with
+  `./scripts/new-deck.sh <name> [parent] [-t <template>]`, which computes the
+  prefix for wherever the deck lands and verifies every reference resolves.
+- **One `.slide` per logical page.** `runtime.js` makes `.slide.is-active`
+  visible; all others are hidden.
+- **Supply notes.** Wrap speaker notes in `<div class="notes">…</div>` inside
+  each slide. Press S to open the overlay.
+- **NEVER put presenter-only text on the slide itself.** Descriptive text like
+  "这一页展示了……" or "Speaker: 这里可以补充……" or small explanatory captions
+  aimed at the presenter MUST go inside `<div class="notes">`, NOT as visible
+  `<p>` / `<span>` elements on the slide. The `.notes` class is `display:none`
+  by default — it only appears in the S overlay. Slides should contain ONLY
+  audience-facing content (titles, bullet points, data, charts, images).
+
+## Images
+
+Five layouts in `templates/single-page/` take real images. Pick by how many
+images the page has to carry:
+
+| I have… | Use | Why |
+|---|---|---|
+| one screenshot / diagram / chart | `image-single.html` | `.img-frame.contain` — letterboxed, **never cropped** |
+| one photo that should carry the page | `image-full-bleed.html` | fills the slide, gradient scrim keeps the title readable |
+| one image plus an argument | `image-text-split.html` | 50/50; add `flip` to `.split` to move the image right |
+| 3–6 images | `image-gallery.html` | uniform grid; mixed source ratios are normalised by the frame |
+| a before and an after | `image-compare.html` | both sides identical size, conclusion under each |
+
+`image-grid.html` and `image-hero.html` are **not** in this list: they are
+gradient-placeholder layouts with no `<img>` at all. Reach for them when you
+want the shape of a bento wall without supplying pictures.
+
+All five are built on one primitive from `assets/base.css`:
 
 ```html
-<body data-logo="logo.svg" data-logo-position="bottom-right" data-logo-size="40px">
-<section class="slide" data-no-logo>...</section>
+<figure class="img-frame"><img src="shot.png" alt=""></figure>
+<figure class="img-frame contain" style="--img-ratio:4/3"><img src="diagram.svg" alt=""></figure>
 ```
 
-로고 위치는 top-left, top-right, bottom-left, bottom-right 중 하나입니다. 이미지 파일은 실제 경로를 확인하고 비율을 유지합니다.
+- `.img-frame` owns the **aspect ratio and the crop**; the `<img>` fills it with
+  `object-fit: cover`. That's what lets a user swap in a photo of any shape
+  without the layout breaking.
+- `.img-frame.contain` letterboxes instead of cropping — **always use it for
+  screenshots, diagrams and logos.**
+- `--img-ratio` (default `16/10`) and `--img-pos` (`object-position`) tune it.
+- `.img-scrim` / `.img-cap` / `.img-tag` are the scrim, caption and corner pill.
+- Images referenced from a deck are resolved relative to the deck's own
+  `index.html` — keep them in the deck folder, e.g. `examples/my-talk/shot.png`.
+- `assets/demo-images/` holds the placeholder artwork used by these layouts:
+  hand-written SVG, ~1 KB each, **no network needed**.
 
-## 효과와 출력
+## Custom logo
 
-효과는 설명을 돕는 범위로 제한합니다. `data-anim="fade-up"` 등 기존 효과를 사용하며 움직임 줄이기 설정을 존중합니다. Canvas 효과는 명시적인 높이가 필요하고 `assets/animations/fx-runtime.js`를 함께 로드합니다.
+To brand a deck with a company / product logo, declare it once on `<body>`:
+
+```html
+<body data-logo="logo.svg"
+      data-logo-position="bottom-right"
+      data-logo-size="40px">
+```
+
+| Attribute | Default | Notes |
+|---|---|---|
+| `data-logo` | — | Image URL, relative to the deck's own HTML file. Required. |
+| `data-logo-position` | `top-right` | `top-left` / `top-right` / `bottom-left` / `bottom-right` |
+| `data-logo-size` | `44px` | Any CSS length; sets the logo's **height**, width follows the aspect ratio |
+| `data-logo-opacity` | `.9` | `1` for full strength |
+| `data-logo-alt` | `""` | Alt text |
+
+- **Skip it on one slide** with `<section class="slide" data-no-logo>` — usually
+  the cover and any full-bleed image slide that carries its own branding.
+- **Fine-tune the inset** with `--logo-inset-x` / `--logo-inset-y` on `.deck-logo`.
+- **Place it by hand** instead, if you want it inside the chrome slots or in a
+  spot the four presets don't cover:
+  ```html
+  <div class="deck">
+    <img class="deck-logo" data-pos="bottom-left" src="logo.svg" alt="">
+  ```
+  This path needs no JS at all — `base.css` styles both the same way.
+- The logo shows in the **presenter preview**, and on **every page of a
+  print/PDF export** (unlike the header/footer/progress chrome, which print
+  hides). `data-no-logo` slides are skipped there too. Per-page printing is
+  painted by `runtime.js` + `@media print`; a deck that omits the runtime still
+  gets the logo on screen, but only on one page of a PDF.
+
+## Writing guide
+
+See [references/authoring-guide.md](references/authoring-guide.md) for a
+step-by-step walkthrough: file structure, naming, how to transform an outline
+into a deck, how to choose layouts and themes per audience, how to do a
+Chinese + English deck, and how to export.
+
+## Catalogs (load when needed)
+
+- [references/themes.md](references/themes.md) — all 36 themes with when-to-use.
+- [references/layouts.md](references/layouts.md) — all 36 layout types.
+- [references/animations.md](references/animations.md) — 27 CSS + 20 canvas FX animations.
+- [references/full-decks.md](references/full-decks.md) — all 15 full-deck templates.
+- [references/presenter-mode.md](references/presenter-mode.md) — **演讲者模式 + 逐字稿编写指南（技术分享/演讲必看）**.
+- [references/authoring-guide.md](references/authoring-guide.md) — full workflow.
+
+## File structure
+
+```
+html-ppt/
+├── SKILL.md                 (this file)
+├── references/              (detailed catalogs, load as needed)
+├── assets/
+│   ├── base.css             (tokens + primitives — do not edit per deck)
+│   ├── demo-images/*.svg    (tiny offline placeholders for the image-* layouts)
+│   ├── fonts.css            (webfont imports)
+│   ├── runtime.js           (keyboard + presenter + overview + theme cycle)
+│   ├── themes/*.css         (36 token overrides, one per theme)
+│   └── animations/
+│       ├── animations.css   (27 named CSS entry animations)
+│       ├── fx-runtime.js    (auto-init [data-fx] on slide enter)
+│       └── fx/*.js          (20 canvas FX modules: particles/graph/fireworks…)
+├── templates/
+│   ├── deck.html                  (minimal 6-slide starter)
+│   ├── theme-showcase.html        (36 slides, iframe-isolated per theme)
+│   ├── layout-showcase.html       (iframe tour of all 36 layouts)
+│   ├── animation-showcase.html    (20 FX + 27 CSS animation slides)
+│   ├── full-decks-index.html      (gallery of all 15 full-deck templates)
+│   ├── full-decks/<name>/         (15 scoped multi-slide deck templates)
+│   └── single-page/*.html         (36 layout files with demo data)
+├── scripts/
+│   ├── new-deck.sh                (scaffold a deck from deck.html)
+│   └── render.sh                  (headless Chrome → PNG)
+└── examples/demo-deck/            (complete working deck)
+```
+
+## Rendering to PNG
+
+`scripts/render.sh` wraps headless Chrome at
+`/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`. For multi-slide
+capture, runtime.js exposes `#/N` deep-links, and render.sh iterates 1..N.
 
 ```bash
-bash scripts/render.sh examples/my-talk/index.html all
+./scripts/render.sh templates/single-page/kpi-grid.html        # single page
+./scripts/render.sh examples/demo-deck/index.html 8 out-dir    # 8 slides, custom dir
 ```
 
-렌더 스크립트는 기본적으로 macOS의 Chrome을 사용합니다. 기본 화면은 1920×1080입니다. 완전한 오프라인 사용을 주장하기 전에 외부 웹 글꼴·차트·코드 강조 의존성을 확인합니다.
+## Keyboard cheat sheet
 
-## 검토와 전달
+```
+←  →  Space  PgUp  PgDn  Home  End    navigate
+swipe left / right (touch)              navigate — phones and tablets, no keyboard needed
+F                                       fullscreen
+S                                       open presenter window (magnetic cards: current/next/script/timer)
+N                                       quick notes drawer (bottom overlay)
+R                                       reset timer (in presenter window)
+?preview=N                              URL param — force preview-only mode (single slide, no chrome)
+O                                       slide overview grid
+T                                       cycle themes (reads data-themes attr)
+A                                       cycle demo animation on current slide
+#/N in URL                              deep-link to slide N
+Esc                                     close all overlays
+```
 
-모든 페이지에서 글자 잘림, 겹침, 대비, 출처, 순서, 페이지 수를 확인합니다. S의 현재/다음 화면과 노트, 방향키 동기화, T 테마 전환도 실제 브라우저에서 확인합니다. 원본 HTML과 필요한 공통 파일을 함께 전달합니다. 렌더 성공과 내용의 정확성, PowerPoint에서의 동작은 서로 다른 검증입니다.
+## License & author
 
-## 참고 문서
-
-[제작 가이드](references/authoring-guide.md) · [테마](references/themes.md) · [전체 템플릿](references/full-decks.md) · [레이아웃](references/layouts.md) · [발표자 화면](references/presenter-mode.md) · [효과](references/animations.md)
-
-원저작자 lewis, MIT. 원본 지침은 `docs/original/SKILL.md`에 보존합니다.
+MIT. Copyright (c) 2026 lewis &lt;sudolewis@gmail.com&gt;.

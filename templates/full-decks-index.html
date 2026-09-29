@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="zh-CN">
 <head>
-<meta charset="utf-8"><title>전체 발표 템플릿 — 한국어 안내</title>
+<meta charset="utf-8"><title>Full-Deck Gallery — html-ppt v2</title>
 <link rel="stylesheet" href="../assets/fonts.css">
 <link rel="stylesheet" href="../assets/base.css">
 <style>
@@ -24,20 +24,19 @@
   .cover p{color:#aab0c0;max-width:60ch;font-size:20px}
   .legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 </style>
-<link rel="stylesheet" href="../assets/korean.css">
 </head>
 <body>
 <div class="deck">
 
 <section class="slide cover">
-  <p class="kicker" style="color:#a78bfa">HTML PPT 전체 템플릿</p>
-  <h1>전체 발표 템플릿 16개</h1>
-  <p>→ 키로 실제 템플릿을 둘러봅니다. 한국어 시작 자료와 기존 원문 시연 자료를 함께 제공합니다. 새 덱은 scripts/new-deck.sh로 생성하세요.</p>
+  <p class="kicker" style="color:#a78bfa">HTML-PPT v2 · Full-Deck Gallery</p>
+  <h1>15 full-deck templates</h1>
+  <p>Press → to browse. Each slide is a live iframe preview of a complete, multi-slide deck template. Open any <code>templates/full-decks/&lt;name&gt;/index.html</code> to see the full deck, or copy the folder to scaffold your own.</p>
   <div class="legend">
-    <span class="tag">원본 디자인 8개</span>
-    <span class="tag">상황별 기본 틀 7개</span>
-    <span class="tag">한국어 독서 세미나 추가</span>
-    <span class="tag">테마 36개</span>
+    <span class="tag">8 extracted from real decks</span>
+    <span class="tag">6 scenario scaffolds</span>
+    <span class="tag">scoped .tpl-&lt;name&gt; CSS</span>
+    <span class="tag">36 themes compatible</span>
   </div>
 </section>
 
@@ -47,102 +46,21 @@
 
 <script>
 const TPLS = [
-  [
-    "book-seminar-ko",
-    "한국어 독서 세미나",
-    "독서·연구",
-    "질문, 주장, 근거, 비교, 검토, 토론, 마무리"
-  ],
-  [
-    "presenter-mode-reveal",
-    "발표자 노트 중심",
-    "강연·교육",
-    "현재·다음 화면, 발표자 노트, 타이머"
-  ],
-  [
-    "course-module",
-    "학습 모듈",
-    "교육·워크숍",
-    "학습 목표, 예시, 연습, 이해 확인"
-  ],
-  [
-    "dir-key-nav-minimal",
-    "큰 문장 중심",
-    "짧은 강연",
-    "페이지마다 하나의 생각과 큰 제목"
-  ],
-  [
-    "knowledge-arch-blueprint",
-    "논증과 구조",
-    "연구·설계",
-    "종이색 격자, 과정과 관계 설명"
-  ],
-  [
-    "weekly-report",
-    "주간 보고",
-    "사역·업무",
-    "지표, 진행 내용, 다음 계획"
-  ],
-  [
-    "xhs-white-editorial",
-    "화이트 매거진",
-    "카드뉴스",
-    "흰 배경, 큰 제목, 여러 강조색"
-  ],
-  [
-    "graphify-dark-graph",
-    "어두운 지식 그래프",
-    "기술·데이터",
-    "어두운 배경과 관계 그래프"
-  ],
-  [
-    "hermes-cyber-terminal",
-    "어두운 터미널",
-    "개발 도구",
-    "터미널·명령어·검토 결과"
-  ],
-  [
-    "obsidian-claude-gradient",
-    "보라색 기술 소개",
-    "도구 사용법",
-    "어두운 배경, 단계별 도구 설명"
-  ],
-  [
-    "testing-safety-alert",
-    "위험과 점검",
-    "안전·회고",
-    "경고색, 위험 수준, 점검 목록"
-  ],
-  [
-    "xhs-pastel-card",
-    "파스텔 카드",
-    "생활·경험 나눔",
-    "부드러운 배색과 카드 구성"
-  ],
-  [
-    "pitch-deck",
-    "기획 제안서",
-    "사업·프로젝트",
-    "문제, 해결, 근거, 제안"
-  ],
-  [
-    "product-launch",
-    "제품 발표",
-    "새 서비스 소개",
-    "표지, 기능, 비교, 사용 안내"
-  ],
-  [
-    "tech-sharing",
-    "기술 공유",
-    "개발·시연",
-    "코드, 설명, 시연, 질의응답"
-  ],
-  [
-    "xhs-post",
-    "세로 카드뉴스",
-    "SNS",
-    "3:4 세로 화면과 짧은 문장"
-  ]
+  ['xhs-white-editorial',      '白底杂志风',        'extracted', 'xhs posts, editorial lifestyle'],
+  ['graphify-dark-graph',      '暗底知识图谱',      'extracted', 'AI/graph/data products'],
+  ['knowledge-arch-blueprint', '奶油蓝图架构',      'extracted', 'architecture, systems thinking'],
+  ['hermes-cyber-terminal',    '暗终端 cyber',      'extracted', 'devtool, honest-review, agent demos'],
+  ['obsidian-claude-gradient', 'GitHub 暗紫渐变',   'extracted', 'tool walkthroughs, LLM product'],
+  ['testing-safety-alert',     '红琥珀警示',        'extracted', 'security, incident review, AI safety'],
+  ['xhs-pastel-card',          '柔和马卡龙',        'extracted', 'lifestyle, soft emotional'],
+  ['dir-key-nav-minimal',      '方向键 8 色极简',    'extracted', 'keynote, one-idea-per-slide'],
+  ['pitch-deck',               'Pitch Deck YC 风',  'scenario',  'fundraising, startup pitch'],
+  ['product-launch',           'Product Launch',    'scenario',  'product announcement, launch keynote'],
+  ['tech-sharing',             'Tech Sharing 技术分享','scenario','internal tech talk, conference talk'],
+  ['weekly-report',            'Weekly Report 周报','scenario',  'status update, business review'],
+  ['xhs-post',                 '小红书 图文 9 屏 3:4','scenario', 'xiaohongshu / ig carousel'],
+  ['course-module',            'Course Module 教学模块','scenario','online course, workshop module'],
+  ['presenter-mode-reveal',    '🎤 Presenter Mode 演讲者模式','scenario','tech sharing, talk with 逐字稿, speaker view']
 ];
 
 const deck = document.querySelector('.deck');

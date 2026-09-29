@@ -1,15 +1,11 @@
-# 파스텔 카드
+# xhs-pastel-card
 
-식별자: `xhs-pastel-card`. 기본 8장. 권장 용도: 생활·경험 나눔.
+暖奶油 `#fef8f1` 底 + 模糊彩色 blob + Playfair italic 衬线大字 + 整色马卡龙卡片（桃 / 薄荷 / 天 / 丁香 / 柠檬 / 玫瑰）。共性提取自 `20260412-obsidian-skills/html/xhs-obsidian-skills.html` 的 `soft-purple/pink/blue/green/orange/teal` 软色卡系统，以及 `20260409 v2-白底版` 的胶囊 chip 顶部条。
 
-부드러운 배색과 카드 구성.
+**Visual traits:** 三颗柔光 blob 作背景、顶部 chip+page 组合、Playfair italic 做 accent 词（em / rose / mint）、整色圆角 28px 大卡片、italic Playfair 序号 01-04、donut SVG 图、小 divider 条 + 渐变、衬线正文做标题 / sans 做正文混排。
 
-```bash
-bash scripts/new-deck.sh my-talk -t xhs-pastel-card
-```
+**Use when:** 生活方式 / 个人成长 / 轻内容 / 情感向的小红书贴或个人演讲；你想要一种「不那么科技感、偏杂志偏手作」的气质；适合讲「慢」「休息」「温柔」主题。
 
-`index.html`의 내용을 바꾸고 `style.css`의 전용 클래스를 유지하세요. 기본 예시를 복사한 뒤 실제 내용과 출처로 교체합니다. 한국어 작성 시 문서에 `lang="ko"`를 지정하고 테마 및 전용 CSS 다음에 `../../../assets/korean.css`를 연결합니다. 출력 폴더에서는 생성 스크립트가 계산한 공통 파일 경로를 사용합니다.
+**Source inspiration:** `20260412-obsidian-skills/html/xhs-obsidian-skills.html` + `20260409` v2-白底版（共性 pastel 系统）。
 
-← → 페이지 이동 · S 발표자 창 · N 노트 · F 전체 화면 · O 전체 보기.
-
-[원본 설명](README.en.md) · [전체 템플릿 안내](../../../references/full-decks.md)
+**Path:** `templates/full-decks/xhs-pastel-card/index.html`
