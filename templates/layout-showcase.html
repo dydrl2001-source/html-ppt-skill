@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="ko">
 <head>
-<meta charset="utf-8"><title>Layout Showcase — html-ppt</title>
+<meta charset="utf-8"><title>페이지 레이아웃 — 한국어 안내</title>
 <link rel="stylesheet" href="../assets/fonts.css">
 <link rel="stylesheet" href="../assets/base.css">
 <link rel="stylesheet" id="theme-link" href="../assets/themes/minimal-white.css">
@@ -16,7 +16,7 @@ body{margin:0;overflow:hidden}
 </head>
 <body>
 <div class="layout-nav">
-  <b>layouts</b>
+  <b>페이지 레이아웃</b>
   <a href="#" data-go="-1">←</a>
   <span id="cur">cover</span>
   <a href="#" data-go="+1">→</a>
@@ -28,13 +28,14 @@ const list=['cover','toc','section-divider','bullets','two-column','three-column
   'roadmap','mindmap','comparison','pros-cons','todo-checklist','gantt',
   'image-single','image-full-bleed','image-text-split','image-gallery','image-compare','image-hero','image-grid',
   'chart-bar','chart-line','chart-pie','chart-radar','arch-diagram','process-steps','cta','thanks'];
+const names={"cover":"표지","toc":"목차","section-divider":"절 구분","bullets":"목록","two-column":"두 열 비교","three-column":"세 열 구성","big-quote":"큰 인용문","stat-highlight":"핵심 수치 하나","kpi-grid":"여러 지표","table":"표","code":"코드","diff":"변경 비교","terminal":"터미널","flow-diagram":"흐름도","timeline":"연표","roadmap":"단계별 계획","mindmap":"개념 관계","comparison":"관점 비교","pros-cons":"장점과 한계","todo-checklist":"점검 목록","gantt":"일정표","image-single":"이미지 전체 보존","image-full-bleed":"사진을 화면에 채우기","image-text-split":"사진과 설명","image-gallery":"이미지 3~6개","image-compare":"두 이미지 비교","image-hero":"배경 중심 표지","image-grid":"여러 크기 영역","chart-bar":"막대 차트","chart-line":"선 차트","chart-pie":"도넛 차트","chart-radar":"레이더 차트","arch-diagram":"구조도","process-steps":"순서와 단계","cta":"다음 행동","thanks":"마무리"};
 let i=0;
 const frame=document.getElementById('frame');
 const cur=document.getElementById('cur');
 function go(n){
   i=(n+list.length)%list.length;
   frame.src='single-page/'+list[i]+'.html';
-  cur.textContent=list[i]+' · '+(i+1)+'/'+list.length;
+  cur.textContent=names[list[i]]+' ('+list[i]+') · '+(i+1)+'/'+list.length;
   history.replaceState(null,'','#/'+(i+1));
 }
 document.querySelectorAll('[data-go]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();go(i+parseInt(a.dataset.go,10))}));

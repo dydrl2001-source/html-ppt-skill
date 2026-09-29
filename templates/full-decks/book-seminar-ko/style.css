@@ -1,0 +1,8 @@
+/* presenter-mode-reveal 구조와 editorial-serif 테마를 바탕으로 만든 한국어 독서 틀 */
+.tpl-book-seminar-ko .slide{padding:120px 132px;justify-content:flex-start}
+.tpl-book-seminar-ko .h1{font-size:112px;line-height:1.2;margin:65px 0 50px;max-width:1600px}
+.tpl-book-seminar-ko .h2{font-size:65px;line-height:1.25;margin:0 0 70px}
+.tpl-book-seminar-ko .focus{font-size:78px;line-height:1.5;letter-spacing:-.04em;color:var(--accent);font-weight:600;margin:40px 0 48px;max-width:1600px}
+.tpl-book-seminar-ko .lede{font-size:34px;line-height:1.65;max-width:1550px;margin:0;color:var(--text-2)}
+.tpl-book-seminar-ko .kicker{font-size:24px;letter-spacing:.04em;margin:0;color:var(--accent)}
+.tpl-book-seminar-ko .deck-footer{left:132px;right:132px;bottom:55px;font-size:21px;color:var(--text-3)}

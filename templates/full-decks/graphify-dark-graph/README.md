@@ -1,11 +1,15 @@
-# graphify-dark-graph
+# 어두운 지식 그래프
 
-Deep-night 暗底 + 力导向知识图谱覆盖层 + 温暖玻璃拟态卡片。灵感来自 `20260413-graphify/ppt/graphify.html` 的 `#06060c` 渐变底、飘移 orb 光晕、glass 卡片（warm/blue/green/purple 五变体）和 rainbow-text 标题。
+식별자: `graphify-dark-graph`. 기본 8장. 권장 용도: 기술·데이터.
 
-**Visual traits:** `#06060c → #0e1020` 斜向渐变、三颗 400-520px blur orb 慢飘动、cover SVG 力导向图谱作为背景、rainbow shift 渐变标题、JetBrains Mono 的 `.cmd-glow` 命令行、玻璃拟态卡片带顶部高光和微妙内阴影、温暖色系 accent (#e8a87c 琥珀 / #7ed3a4 薄荷 / #7eb8da 雾蓝 / #b8a4d6 丁香).
+어두운 배경과 관계 그래프.
 
-**Use when:** 介绍一个开发者工具、命令行产品、知识图谱 / 数据可视化相关项目；你希望现场演示时视觉有「AI native + 科技感 + 温度」。
+```bash
+bash scripts/new-deck.sh my-talk -t graphify-dark-graph
+```
 
-**Source inspiration:** `20260413-graphify/ppt/graphify.html`.
+`index.html`의 내용을 바꾸고 `style.css`의 전용 클래스를 유지하세요. 기본 예시를 복사한 뒤 실제 내용과 출처로 교체합니다. 한국어 작성 시 문서에 `lang="ko"`를 지정하고 테마 및 전용 CSS 다음에 `../../../assets/korean.css`를 연결합니다. 출력 폴더에서는 생성 스크립트가 계산한 공통 파일 경로를 사용합니다.
 
-**Path:** `templates/full-decks/graphify-dark-graph/index.html`
+← → 페이지 이동 · S 발표자 창 · N 노트 · F 전체 화면 · O 전체 보기.
+
+[원본 설명](README.en.md) · [전체 템플릿 안내](../../../references/full-decks.md)

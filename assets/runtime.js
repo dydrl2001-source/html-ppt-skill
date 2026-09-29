@@ -27,6 +27,15 @@
    * set from the audience — if you add one here, add it there too. */
   const NOTE_SEL = '.notes, aside.notes, .speaker-notes';
 
+  // UI language follows the deck, not the browser's locale.
+  const language = (document.documentElement.lang || 'en').toLowerCase();
+  const locale = language.startsWith('ko') ? 'ko' : language.startsWith('zh') ? 'zh' : 'en';
+  const UI = {
+    ko: {lang:'ko',title:'발표자 화면',current:'현재 페이지',next:'다음 페이지',script:'발표자 노트',timer:'발표 시간',slide:'슬라이드',prevButton:'← 이전',nextButton:'다음 →',reset:'시간 초기화',navigate:'페이지 이동',close:'닫기',drag:'제목을 끌어 이동 · 오른쪽 아래를 끌어 크기 조절',layout:'배치 초기화',confirm:'발표자 화면 배치를 기본값으로 되돌릴까요?',empty:'이 페이지에는 발표자 노트가 없습니다.',popup:'발표자 화면을 사용하려면 브라우저의 팝업을 허용해 주세요.'},
+    en: {lang:'en',title:'Presenter View',current:'CURRENT',next:'NEXT',script:'SPEAKER NOTES',timer:'TIMER',slide:'Slide',prevButton:'← Prev',nextButton:'Next →',reset:'Reset timer',navigate:'Navigate',close:'Close',drag:'Drag the header to move · Drag the bottom-right corner to resize',layout:'Reset layout',confirm:'Restore the default card layout?',empty:'No speaker notes for this slide.',popup:'Allow popups to use presenter view.'},
+    zh: {lang:'zh-CN',title:'演讲者视图',current:'当前页',next:'下一页',script:'演讲稿',timer:'计时器',slide:'幻灯片',prevButton:'← 上一页',nextButton:'下一页 →',reset:'重置计时',navigate:'翻页',close:'关闭',drag:'拖动卡片头部移动 · 拖动右下角调整大小',layout:'重置布局',confirm:'恢复默认卡片布局？',empty:'这一页还没有逐字稿',popup:'请允许弹出窗口以使用演讲者视图'}
+  }[locale];
+
   function ready(fn){ if(document.readyState!='loading')fn(); else document.addEventListener('DOMContentLoaded',fn);}
 
   /* ========== Parse URL for preview-only mode ==========
@@ -239,7 +248,7 @@
         t.style.overflow = 'hidden';
 
         const title = s.getAttribute('data-title') ||
-          (s.querySelector('h1,h2,h3')||{}).textContent || ('Slide '+(i+1));
+          (s.querySelector('h1,h2,h3')||{}).textContent || (UI.slide+' '+(i+1));
         
         // Create a container for the mini-slide
         const mini = document.createElement('div');
@@ -416,7 +425,7 @@
         const note = s.querySelector(NOTE_SEL);
         return {
           title: s.getAttribute('data-title') ||
-            (s.querySelector('h1,h2,h3')||{}).textContent || ('Slide '+(i+1)),
+            (s.querySelector('h1,h2,h3')||{}).textContent || (UI.slide+' '+(i+1)),
           notes: note ? note.innerHTML : ''
         };
       });
@@ -427,7 +436,7 @@
 
       presenterWin = window.open('', 'html-ppt-presenter', 'width=1280,height=820,menubar=no,toolbar=no');
       if (!presenterWin) {
-        alert('请允许弹出窗口以使用演讲者视图');
+        alert(UI.popup);
         return;
       }
       presenterWin.document.open();
@@ -448,10 +457,10 @@
 
       // Build the document as a single template string for clarity
       return `<!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="${UI.lang}">
 <head>
 <meta charset="utf-8">
-<title>Presenter View</title>
+<title>${UI.title}</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body {
@@ -461,7 +470,7 @@
       radial-gradient(circle at 20% 30%, rgba(88,166,255,.04), transparent 50%),
       radial-gradient(circle at 80% 70%, rgba(188,140,255,.04), transparent 50%);
     color: #e6edf3;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", "Noto Sans SC", sans-serif;
   }
   /* Stage: positioned area where cards live */
   #stage { position: absolute; inset: 0; overflow: hidden; }
@@ -540,7 +549,7 @@
     overflow-y: auto;
     font-size: 18px; line-height: 1.75;
     color: #d0d7de;
-    font-family: "Noto Sans SC", -apple-system, sans-serif;
+    font-family: -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Noto Sans SC", sans-serif;
   }
   .pcard-notes .pcard-body p { margin: 0 0 .7em 0; }
   .pcard-notes .pcard-body strong { color: #f0883e; }
@@ -630,27 +639,27 @@
   <div class="pcard pcard-preview" id="card-cur" style="--dot-color:#58a6ff">
     <div class="pcard-head" data-drag>
       <span class="pcard-dot"></span>
-      <span class="pcard-title">CURRENT</span>
+      <span class="pcard-title">${UI.current}</span>
       <span class="pcard-meta" id="cur-meta">—</span>
     </div>
-    <div class="pcard-body"><iframe id="iframe-cur"></iframe></div>
+    <div class="pcard-body"><iframe id="iframe-cur" title="${UI.current}"></iframe></div>
     <div class="pcard-resize" data-resize></div>
   </div>
 
   <div class="pcard pcard-preview" id="card-nxt" style="--dot-color:#bc8cff">
     <div class="pcard-head" data-drag>
       <span class="pcard-dot"></span>
-      <span class="pcard-title">NEXT</span>
+      <span class="pcard-title">${UI.next}</span>
       <span class="pcard-meta" id="nxt-meta">—</span>
     </div>
-    <div class="pcard-body"><iframe id="iframe-nxt"></iframe></div>
+    <div class="pcard-body"><iframe id="iframe-nxt" title="${UI.next}"></iframe></div>
     <div class="pcard-resize" data-resize></div>
   </div>
 
   <div class="pcard pcard-notes" id="card-notes" style="--dot-color:#f0883e">
     <div class="pcard-head" data-drag>
       <span class="pcard-dot"></span>
-      <span class="pcard-title">SPEAKER SCRIPT · 逐字稿</span>
+      <span class="pcard-title">${UI.script}</span>
     </div>
     <div class="pcard-body" id="notes-body"></div>
     <div class="pcard-resize" data-resize></div>
@@ -659,18 +668,18 @@
   <div class="pcard pcard-timer" id="card-timer" style="--dot-color:#3fb950">
     <div class="pcard-head" data-drag>
       <span class="pcard-dot"></span>
-      <span class="pcard-title">TIMER</span>
+      <span class="pcard-title">${UI.timer}</span>
     </div>
     <div class="pcard-body">
       <div class="timer-display" id="timer-display">00:00</div>
       <div class="timer-row">
-        <span class="label">Slide</span>
+        <span class="label">${UI.slide}</span>
         <span class="val" id="timer-count">1 / ${total}</span>
       </div>
       <div class="timer-controls">
-        <button class="timer-btn" id="btn-prev">← Prev</button>
-        <button class="timer-btn" id="btn-next">Next →</button>
-        <button class="timer-btn" id="btn-reset">⏱ Reset</button>
+        <button class="timer-btn" id="btn-prev">${UI.prevButton}</button>
+        <button class="timer-btn" id="btn-next">${UI.nextButton}</button>
+        <button class="timer-btn" id="btn-reset">${UI.reset}</button>
       </div>
     </div>
     <div class="pcard-resize" data-resize></div>
@@ -678,11 +687,11 @@
 </div>
 
 <div class="hint-bar">
-  <span><kbd>← →</kbd> 翻页</span>
-  <span><kbd>R</kbd> 重置计时</span>
-  <span><kbd>Esc</kbd> 关闭</span>
-  <span style="color:#6e7681">拖动卡片头部移动 · 拖动右下角调整大小</span>
-  <button class="reset-layout" id="reset-layout">重置布局</button>
+  <span><kbd>← →</kbd> ${UI.navigate}</span>
+  <span><kbd>R</kbd> ${UI.reset}</span>
+  <span><kbd>Esc</kbd> ${UI.close}</span>
+  <span style="color:#6e7681">${UI.drag}</span>
+  <button class="reset-layout" id="reset-layout">${UI.layout}</button>
 </div>
 
 <script>
@@ -692,6 +701,7 @@
   var idx = ${startIdx};
   var deckUrl = ${deckUrlJSON};
   var STORAGE_KEY = ${embed(storageKey)};
+  var ui = ${embed(UI)};
   var bc;
   try { bc = new BroadcastChannel(${channelJSON}); } catch(e) {}
 
@@ -928,7 +938,7 @@
 
     /* Notes */
     var note = slideMeta[n].notes;
-    notesBody.innerHTML = note || '<span class="empty">（这一页还没有逐字稿）</span>';
+    notesBody.innerHTML = note || '<span class="empty">' + ui.empty + '</span>';
 
     /* Timer count */
     timerCount.textContent = (n + 1) + ' / ' + total;
@@ -970,7 +980,7 @@
   document.getElementById('btn-next').addEventListener('click', function(){ go(idx + 1); });
   document.getElementById('btn-reset').addEventListener('click', resetTimer);
   document.getElementById('reset-layout').addEventListener('click', function(){
-    if (confirm('恢复默认卡片布局？')) {
+    if (confirm(ui.confirm)) {
       try { localStorage.removeItem(STORAGE_KEY); } catch(e){}
       applyLayout(defaultLayout());
     }
@@ -1003,7 +1013,7 @@
     if (idx + 1 < total) iframeNxt.src = deckUrl + '?preview=' + (idx + 2);
     /* Initialize notes/timer/count without touching iframes */
     var m = slideMeta[idx] || {};
-    notesBody.innerHTML = m.notes || '<span class="empty">（这一页还没有逐字稿）</span>';
+    notesBody.innerHTML = m.notes || '<span class="empty">' + ui.empty + '</span>';
     curMeta.textContent = (idx + 1) + '/' + total;
     nxtMeta.textContent = (idx + 2) + '/' + total;
     timerCount.textContent = (idx + 1) + ' / ' + total;

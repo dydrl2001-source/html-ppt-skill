@@ -1,0 +1,15 @@
+/* 한국어에만 적용. 테마/템플릿 CSS 다음에 연결합니다. 외부 요청 없음. */
+html:lang(ko) {
+  --font-ko: 'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR','Noto Sans CJK KR',sans-serif;
+  --font-sans: var(--font-ko);
+  --font-display: var(--font-ko);
+  --font-serif: var(--font-ko);
+}
+html:lang(ko) body, html:lang(ko) .deck {font-family:var(--font-ko);}
+html:lang(ko) .slide {word-break:keep-all;overflow-wrap:break-word;}
+html:lang(ko) .slide h1, html:lang(ko) .slide h2,
+html:lang(ko) .slide h3, html:lang(ko) .slide h4,
+html:lang(ko) .h1, html:lang(ko) .h2,
+html:lang(ko) .lede, html:lang(ko) .notes {font-family:var(--font-ko);font-style:normal;}
+html:lang(ko) .h1, html:lang(ko) .h2 {line-height:1.2;letter-spacing:-.035em;}
+html:lang(ko) .notes-overlay {font-family:var(--font-ko);line-height:1.7;}

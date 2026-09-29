@@ -1,98 +1,34 @@
-# Full-Deck Templates
+# 전체 발표 템플릿 16개
 
-Self-contained multi-slide HTML decks under `templates/full-decks/<name>/`. Each folder contains:
+각 폴더는 `index.html`, `style.css`, `README.md`로 구성됩니다. 전용 CSS는 `.tpl-이름` 범위를 사용합니다. 원본 15개에 한국어 독서 세미나 1개를 추가했습니다.
 
-- `index.html` — complete multi-slide deck (cover / section / content / code / chart or diagram / CTA / thanks, 7+ slides)
-- `style.css` — scoped with `.tpl-<name>` class prefix so multiple templates can coexist
-- `README.md` — short rationale, inspiration, and use guidance
+[한국어 추천 미리보기](../templates/recommended-ko.html)
 
-All templates pull the shared `assets/fonts.css`, `assets/base.css`, and `assets/runtime.js` from the skill root. Navigate with `← →` / `space`, use `F` for fullscreen, `O` for overview.
+| 식별자 | 이름 | 권장 용도 | 기본 장수 | 구성 |
+|---|---|---|---:|---|
+| `book-seminar-ko` | 한국어 독서 세미나 | 독서·연구 | 8 | 질문, 주장, 근거, 비교, 검토, 토론, 마무리 |
+| `presenter-mode-reveal` | 발표자 노트 중심 | 강연·교육 | 6 | 현재·다음 화면, 발표자 노트, 타이머 |
+| `course-module` | 학습 모듈 | 교육·워크숍 | 7 | 학습 목표, 예시, 연습, 이해 확인 |
+| `dir-key-nav-minimal` | 큰 문장 중심 | 짧은 강연 | 8 | 페이지마다 하나의 생각과 큰 제목 |
+| `knowledge-arch-blueprint` | 논증과 구조 | 연구·설계 | 8 | 종이색 격자, 과정과 관계 설명 |
+| `weekly-report` | 주간 보고 | 사역·업무 | 7 | 지표, 진행 내용, 다음 계획 |
+| `xhs-white-editorial` | 화이트 매거진 | 카드뉴스 | 8 | 흰 배경, 큰 제목, 여러 강조색 |
+| `graphify-dark-graph` | 어두운 지식 그래프 | 기술·데이터 | 8 | 어두운 배경과 관계 그래프 |
+| `hermes-cyber-terminal` | 어두운 터미널 | 개발 도구 | 8 | 터미널·명령어·검토 결과 |
+| `obsidian-claude-gradient` | 보라색 기술 소개 | 도구 사용법 | 8 | 어두운 배경, 단계별 도구 설명 |
+| `testing-safety-alert` | 위험과 점검 | 안전·회고 | 8 | 경고색, 위험 수준, 점검 목록 |
+| `xhs-pastel-card` | 파스텔 카드 | 생활·경험 나눔 | 8 | 부드러운 배색과 카드 구성 |
+| `pitch-deck` | 기획 제안서 | 사업·프로젝트 | 10 | 문제, 해결, 근거, 제안 |
+| `product-launch` | 제품 발표 | 새 서비스 소개 | 8 | 표지, 기능, 비교, 사용 안내 |
+| `tech-sharing` | 기술 공유 | 개발·시연 | 8 | 코드, 설명, 시연, 질의응답 |
+| `xhs-post` | 세로 카드뉴스 | SNS | 9 | 3:4 세로 화면과 짧은 문장 |
 
-Use these when you want a coherent, opinionated look for an entire deck — not a mix-and-match of layouts. Each template is visually distinctive enough to be identified at a glance.
+## 시작
 
----
+`bash scripts/new-deck.sh my-talk -t book-seminar-ko`로 생성합니다. 출력 폴더를 직접 복사하면 상대 경로가 깨질 수 있으므로 생성 스크립트를 우선 사용합니다.
 
-## 1. xhs-white-editorial — 白底杂志风
+발표자 기능은 모든 템플릿의 공통 런타임에 있습니다. 노트가 중요한 발표에서는 `presenter-mode-reveal`을, 독서 세미나에서는 `book-seminar-ko`를 권합니다. S로 현재/다음 화면과 노트·타이머를 볼 수 있습니다.
 
-- **Source inspiration:** `20260409 升级版知识库/小红书图文/v2-白底版/slide_01_cover.html` + `20260412-AI测试与安全/html/xhs-ai-testing-safety-v2.html`
-- **Key visual traits:** pure-white background, top 10-color rainbow bar, 80-110px display headlines, purple→blue→green→orange→pink gradient text, macaron soft-card set (soft-purple/pink/blue/green/orange), black-on-white `.focus` pills, hero quote box.
-- **When to use:** dual-purpose XHS image + horizontal deck; dense text with strong emphasis; Chinese-first audience.
-- **Path:** `templates/full-decks/xhs-white-editorial/index.html`
+`book-seminar-ko`와 `presenter-mode-reveal`은 한국어 시작 자료입니다. 나머지 기존 시연 자료는 원문의 내용과 구조를 보존하고, 폴더별 사용 설명을 한국어로 제공합니다. 시연 내용과 수치는 실제 발표에 맞게 교체하세요.
 
-## 2. graphify-dark-graph — 暗底知识图谱
-
-- **Source inspiration:** `20260413-graphify/ppt/graphify.html`
-- **Key visual traits:** `#06060c→#0e1020` deep-night gradient, drifting blur orbs, SVG force-directed graph overlay on cover, rainbow-shift gradient headlines, JetBrains Mono command-line glow, glass-morphism cards (warm/blue/green/purple/danger). Accent palette: amber `#e8a87c`, mint `#7ed3a4`, mist-blue `#7eb8da`, lilac `#b8a4d6`.
-- **When to use:** dev-tool / CLI / knowledge-graph / data-viz launches; live-demo decks that want an "AI-native + sci-fi + warm" vibe.
-- **Path:** `templates/full-decks/graphify-dark-graph/index.html`
-
-## 3. knowledge-arch-blueprint — 奶油蓝图架构
-
-- **Source inspiration:** `20260405-Karpathy-知识库/20260405 架构图v2.html`
-- **Key visual traits:** cream paper `#F0EAE0` base, single rust accent `#B5392A`, 48px blueprint grid mask, hard 2px black border cards, pipeline step-boxes with one hero raised, right-side rust insight callout, Playfair serif big numbers, SVG dashed feedback-loop arrows. Zero gradients, zero soft shadows.
-- **When to use:** system architecture diagrams, data-flow maps, engineering white-papers; you want a serious, printable, README-friendly feel.
-- **Path:** `templates/full-decks/knowledge-arch-blueprint/index.html`
-
-## 4. hermes-cyber-terminal — 暗终端 honest-review
-
-- **Source inspiration:** `20260414-hermes-agent/ppt/hermes-record.html` + `hermes-vs-openclaw.html`
-- **Key visual traits:** `#0a0c10` black, 56px cyber grid + CRT vignette + scanlines, window traffic-light chrome, `$ prompt` command-line headlines, mint-green `#7ed3a4` glow big text, JetBrains Mono throughout, stroke-only bar charts, blinking cursor, amber/green/red tag hierarchy, dark code box.
-- **When to use:** reviews of CLI / agent / dev tools with trace, diff, and benchmarks; when you want the "honest technical reviewer" voice.
-- **Path:** `templates/full-decks/hermes-cyber-terminal/index.html`
-
-## 5. obsidian-claude-gradient — GitHub 暗紫渐变
-
-- **Source inspiration:** `20260406-obsidian-claude/slides.html`
-- **Key visual traits:** GitHub-dark `#0d1117`, purple+blue radial ambient plus 60px masked grid, center-aligned layout, purple pill tags, three-stop gradient text `#a855f7→#60a5fa→#34d399`, GitHub-ish code palette (`#010409` bg + purple/blue/orange/green tokens), purple-left-border highlight block.
-- **When to use:** developer workflow / MCP / Agent / dev-tool tutorials; feels like GitHub Blog / Linear Changelog; config + steps heavy content.
-- **Path:** `templates/full-decks/obsidian-claude-gradient/index.html`
-
-## 6. testing-safety-alert — 红琥珀警示
-
-- **Source inspiration:** `20260412-AI测试与安全/html/xhs-ai-testing-safety-v2.html`
-- **Key visual traits:** top and bottom 45° red-black hazard stripes, red strike-through negation headlines, L1/L2/L3 green/amber/red tier cards, alert-box with circular status dot, policy-yaml code block with red left border and `bad` keyword highlighting, red/green checklist, Q1 incident stacked bar chart.
-- **When to use:** safety / risk / incident post-mortem / red-team / pre-launch AI review / policy-as-code; when the audience needs to feel "this is serious, don't skim".
-- **Path:** `templates/full-decks/testing-safety-alert/index.html`
-
-## 7. xhs-pastel-card — 柔和马卡龙慢生活
-
-- **Source inspiration:** `20260412-obsidian-skills/html/xhs-obsidian-skills.html` + pastel patterns shared with `20260409` v2-白底版
-- **Key visual traits:** cream `#fef8f1` base, three soft blurred blobs, Playfair italic serif display headlines mixed with sans body, full-color 28px rounded macaron cards (peach / mint / sky / lilac / lemon / rose), italic Playfair `01-04` numerals, SVG donut chart, chip+page topbar.
-- **When to use:** lifestyle / personal-growth / slow-living / emotional content; when you want a "magazine, handmade, not-so-techy" feel; themes like rest, pause, softness.
-- **Path:** `templates/full-decks/xhs-pastel-card/index.html`
-
-## 8. dir-key-nav-minimal — 方向键 8 色极简
-
-- **Source inspiration:** `20260405-Karpathy-知识库/20260405 演示幻灯片【方向键版】.html`
-- **Key visual traits:** 8 slides each on its own mono background (indigo / cream / crimson / emerald / slate / violet / white / charcoal), each with its own accent color, 160px display headline + 4px stubby accent line divider, arrow `→` prefixed Mono list, bottom-left `← →` kbd hint plus bottom-right page label, huge breathing negative space.
-- **When to use:** keynote-style minimalist talk where you have something to say and not much to show; one idea per slide; talks / launches / public presentations.
-- **Path:** `templates/full-decks/dir-key-nav-minimal/index.html`
-
----
-
-## Scenario decks (generic, reusable)
-
-These are not extracted from a single source — they are generic scaffolds for the most common presentation jobs. Each is visually distinctive and content-rich out of the box.
-
-| # | Name | Slides | Feel | When to use |
-|---|---|---|---|---|
-| 9  | `pitch-deck`       | 10 | White + blue→purple gradient, YC/VC vibe, big numbers, traction chart | Fundraising, startup pitch, investor meeting |
-| 10 | `product-launch`   | 8  | Dark hero + light content, warm orange→peach, feature cards, pricing tiers, CTA | Announcing a product, launch keynote |
-| 11 | `tech-sharing`     | 8  | GitHub-dark, JetBrains Mono, terminal code blocks, agenda + Q&A | 技术分享, internal tech talk, conference talk |
-| 12 | `weekly-report`    | 7  | Corporate clarity, 8-cell KPI grid, shipped list, 8-week bar chart, next-week table | 周报, team status update, business review |
-| 13 | `xhs-post`         | 9  | **3:4 @ 810×1080**, warm pastel, dashed sticker cards, page dots | 小红书 图文 post, Instagram carousel |
-| 14 | `course-module`    | 7  | Warm paper + Playfair serif, persistent left sidebar of learning objectives, MCQ self-check | 教学模块, online course, workshop module |
-| 15 | `presenter-mode-reveal` 🎤 | 6  | **演讲者模式专用** · tokyo-night 默认 · 5 主题 T 键切换 · 每页带 150–300 字逐字稿示例 | **技术分享/演讲/课程**—需要按 S 键看逐字稿的场景 ✨ |
-
-Each folder: `index.html`, scoped `style.css` (prefixed `.tpl-<name>`), `README.md`. The `xhs-post` template overrides the default `.slide` box to fixed `810×1080` for 3:4 portrait.
-
-> 🎤 **任何演讲场景（技术分享 / 课程 / 路演）都推荐用 `presenter-mode-reveal`**，或者参考 [presenter-mode.md](./presenter-mode.md) 指南给其他模板加 `<aside class="notes">` 逐字稿。
-
----
-
-## Authoring notes
-
-- Every template scopes its CSS under `.tpl-<name>` so two or more templates can load on the same page without collisions.
-- Swap demo content, but keep the structural classes — they are what gives each template its identity.
-- The shared runtime (`assets/runtime.js`) provides keyboard nav, fullscreen, overview grid, theme cycling — you don't need to add any JS.
-- Charts are hand-rolled SVG (no CDN dependency). Feel free to replace with chart.js / echarts if you need interactive data.
+`xhs-post`는 3:4 세로 카드뉴스입니다. 화면 비율이 다른 템플릿의 요소를 가져올 때는 크기와 여백을 다시 확인하세요.

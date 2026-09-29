@@ -1,165 +1,52 @@
-# Authoring guide
+# 한국어 발표자료 제작 가이드
 
-How to turn a user request ("make me a deck about X") into a finished
-html-ppt deck. Follow these steps in order.
+## 1. 질문과 추천안
 
-## 1. Understand the deck
+청중, 발표 시간, 핵심 질문, 출력 형식을 확인합니다. 각 질문에는 어울리는 추천안을 붙입니다. 이미 사용자에게 선택을 위임받았다면 가정을 밝히고 진행합니다.
 
-Before touching files, clarify:
+## 2. 템플릿과 테마
 
-1. **Audience** — engineers? designers? executives? consumers?
-2. **Length** — 5 min lightning? 20 min share? 45 min talk?
-3. **Language** — Chinese, English, bilingual? (Noto Sans SC is preloaded.)
-4. **Format** — on-screen live, PDF export, 小红书图文?
-5. **Tone** — clinical / playful / editorial / cyber?
+독서 발표는 book-seminar-ko와 editorial-serif, 연구 비교는 academic-paper, 수업은 course-module, 짧은 강연은 dir-key-nav-minimal을 권합니다. [추천 미리보기](../templates/recommended-ko.html)에서 실제 한글 화면을 비교할 수 있습니다. 전체 템플릿이 자체 배색을 쓰면 테마 교체 효과가 제한될 수 있습니다.
 
-The audience + tone map to a theme; the length maps to slide count; the
-format maps to runtime features (live → notes + T-cycle; PDF → page-break
-CSS, already handled in `base.css`).
+## 3. 이야기의 순서
 
-## 2. Pick a theme
+독서 세미나는 질문, 저자의 주장, 근거, 다른 관점, 논증의 한계, 토론, 다음 질문 순으로 구성할 수 있습니다. 발표 시간에 맞춰 합치거나 줄입니다. 장식적인 목차·간지로 페이지 수를 불필요하게 늘리지 않습니다.
 
-Use `references/themes.md`. When in doubt:
-
-- **Engineers** → `catppuccin-mocha` / `tokyo-night` / `dracula`.
-- **Designers / product** → `editorial-serif` / `aurora` / `soft-pastel`.
-- **Execs** → `minimal-white` / `arctic-cool` / `swiss-grid`.
-- **Consumers** → `xiaohongshu-white` / `sunset-warm` / `soft-pastel`.
-- **Cyber / CLI / infra** → `terminal-green` / `blueprint` / `gruvbox-dark`.
-- **Pitch / bold** → `neo-brutalism` / `sharp-mono` / `bauhaus`.
-- **Launch / product reveal** → `glassmorphism` / `aurora`.
-
-Wire the theme as `<link id="theme-link" href="../assets/themes/NAME.css">`
-and list 3-5 alternatives in `data-themes` so the user can press T to audition.
-
-## 3. Outline the deck
-
-A solid 20-minute deck is usually:
-
-```
-cover → toc → section-divider #1 → [2-4 body pages] →
-section-divider #2 → [2-4 body pages] → section-divider #3 →
-[2-4 body pages] → cta → thanks
-```
-
-Pick 1 layout per page from `references/layouts.md`. Don't repeat the same
-layout twice in a row.
-
-## 4. Scaffold the deck
+## 4. 생성
 
 ```bash
-./scripts/new-deck.sh my-talk                    # base template -> examples/my-talk/
-./scripts/new-deck.sh my-talk . -t pitch-deck    # full-deck template, into ./my-talk/
-./scripts/new-deck.sh my-talk ~/decks            # anywhere, inside the skill or not
+bash scripts/new-deck.sh my-talk -t book-seminar-ko
+bash scripts/new-deck.sh my-talk ./decks -t presenter-mode-reveal
 ```
 
-This copies the chosen template into `<parent>/my-talk/index.html` and rewrites
-every `assets/` reference to the prefix that is correct for **that** location,
-then verifies each one resolves before reporting success. Add/remove
-`<section class="slide">` blocks to match your outline.
+생성 스크립트는 공통 파일을 복사하지 않고 올바른 상대 경로를 연결합니다. HTML 파일만 다른 컴퓨터로 보내면 연결이 깨질 수 있습니다. 관련 폴더 구조를 함께 전달하거나 공통 파일을 포함한 배포본을 따로 만듭니다.
 
-## 5. Author each slide
+## 5. 본문과 노트
 
-For each outline item:
+한 페이지에 하나의 논점을 두고 설명은 노트로 보냅니다. 핵심 문장을 크게 보여주는 페이지와 비교·근거 페이지를 섞습니다. 저자의 주장과 작성자의 해석을 구분하고 출처는 확인한 범위만 기록합니다. 직접 인용은 원문과 대조합니다.
 
-1. Open the matching single-page layout, e.g. `templates/single-page/kpi-grid.html`.
-2. Copy the `<section class="slide">…</section>` block.
-3. Paste into your deck.
-4. Replace demo data with real data. Keep the class structure intact.
-5. Set `data-title="..."` (used by the Overview grid).
-6. Add `<div class="notes">…</div>` with speaker notes.
+## 6. 한국어와 이미지
 
-### Branding the deck with a logo
+`lang="ko"`를 지정하고 전용 CSS 다음에 `assets/korean.css`를 연결합니다. 시스템 글꼴을 쓰므로 인터넷 없이도 한글을 표시할 수 있지만 기기별 줄바꿈은 확인해야 합니다. 사진은 실제 파일을 사용하고 도표·로고·스크린샷은 `.img-frame.contain`으로 전체를 보존합니다.
 
-Declare it **once** on `<body>`, not per slide:
+로고는 `<body data-logo="logo.svg" data-logo-position="bottom-right" data-logo-size="40px">`로 지정할 수 있습니다. 특정 페이지에서 제외하려면 `data-no-logo`를 붙입니다.
 
-```html
-<body data-logo="logo.svg" data-logo-position="bottom-right" data-logo-size="40px">
-```
+## 7. 효과
 
-Position is one of `top-left` / `top-right` / `bottom-left` / `bottom-right`
-(default `top-right`); `data-logo-size` sets the height. Drop the logo from an
-individual slide with `<section class="slide" data-no-logo>` — the cover usually
-already shows the brand at full size.
+기본은 차분한 정적 구성입니다. 필요하면 제목의 fade-up 또는 목록의 stagger-list처럼 기존 효과를 제한적으로 사용합니다. 움직임 줄이기 설정을 존중합니다.
 
-The image path is resolved relative to the deck's own HTML file, so keep the
-file next to `index.html` (`examples/my-talk/logo.svg` → `data-logo="logo.svg"`).
-Never hand-edit the `../` depth in asset paths — see the rule in section 10.
+## 8. 브라우저 검토
 
-If the four presets don't fit, write the element yourself inside `.deck`:
-`<img class="deck-logo" data-pos="top-left" src="logo.svg" alt="">`. That works
-with `runtime.js` absent entirely, since the styling lives in `base.css`.
+방향키로 모든 페이지를 보고 문장 잘림·겹침·대비를 확인합니다. S 발표자 창에서 현재/다음 미리보기와 노트가 맞는지, 다음 버튼이 청중 화면과 동기화되는지 확인합니다. N은 빠른 노트, O는 전체 보기, T는 지정한 테마 순환입니다.
 
-## 6. Add animations sparingly
+## 9. 출력과 전달
 
-Rules of thumb:
+`bash scripts/render.sh examples/my-talk/index.html all`은 macOS Chrome으로 PNG를 만듭니다. PDF는 브라우저 인쇄 미리보기에서 확인한 뒤 저장합니다. PPTX는 별도 생성 도구가 필요합니다. HTML 발표자 기능과 PowerPoint 발표자 기능은 별개의 실행 환경입니다.
 
-- Cover/title: `rise-in` or `blur-in`.
-- Body content: `fade-up` for the hero element, `stagger-list` for grids/lists.
-- Stat pages: `counter-up`.
-- Section dividers: `perspective-zoom` or `cube-rotate-3d`.
-- Closer: `confetti-burst` on the "Thanks" text.
+## 문제 해결
 
-Pick **one** accent animation per slide. Everything else should be calm.
-
-## 7. Chinese + English decks
-
-- Fonts are already imported in `fonts.css` (Noto Sans SC + Noto Serif SC).
-- Use `lang="zh-CN"` on `<html>`.
-- For bilingual titles, stack lines: `<h1 class="h1">主标题<br><span class="dim">English subtitle</span></h1>`.
-- Keep English subtitles in a lighter weight (300) and dim color to avoid
-  visual competition.
-
-## 8. Review in-browser
-
-```bash
-open examples/my-talk/index.html
-```
-
-Walk through every slide with ← →. Press:
-
-- **O** — overview grid; catch any layout clipping.
-- **T** — cycle themes; make sure nothing looks broken in any theme.
-- **S** — open speaker notes; verify every slide has notes.
-
-## 9. Export to PNG
-
-```bash
-# single slide
-./scripts/render.sh examples/my-talk/index.html
-
-# all slides (autodetect count by looking for .slide sections)
-./scripts/render.sh examples/my-talk/index.html all
-
-# explicit slide count + output dir
-./scripts/render.sh examples/my-talk/index.html 12 out/my-talk-png
-```
-
-Output is 1920×1080 by default. Change in `render.sh` if the user wants 3:4
-for 小红书图文 (1242×1660).
-
-## 10. What to NOT do
-
-- Don't hand-author from a blank file.
-- Don't use raw hex colors in slide markup. Use tokens.
-- Don't load heavy animation frameworks. Everything should stay within the
-  CSS/JS that already ships.
-- Don't add more than one new template file unless a genuinely new layout
-  type is needed. Prefer composition.
-- Don't delete slides from the showcase decks.
-- **Don't put presenter-only text on the slide.** Any descriptive text,
-  narration cues, or explanations meant for the speaker (e.g. "这一页的重点是…",
-  "Note: mention X here", small grey captions explaining the slide's purpose)
-  MUST go inside `<div class="notes">`, not as visible elements. The `.notes`
-  div is hidden (`display:none`) and only shown via the S overlay. Slides
-  should contain ONLY audience-facing content.
-
-## Troubleshooting
-
-- **Theme doesn't switch with T**: check `data-themes` on `<body>` and
-  `data-theme-base` pointing to the themes directory relative to the HTML
-  file.
-- **Fonts fall back**: make sure `fonts.css` is linked before the theme.
-- **Chart.js colors wrong**: charts read CSS vars in JS; make sure they run
-  after the DOM is ready (`addEventListener('DOMContentLoaded', …)`).
-- **PNG too small**: bump `--window-size` in `scripts/render.sh`.
+- 테마 전환: theme-link의 경로와 html/body의 data-themes를 확인합니다.
+- 한국어 글꼴: korean.css를 테마와 전용 CSS 뒤에 둡니다.
+- 발표자 창: 브라우저 팝업을 허용합니다.
+- 오프라인 차트·코드: 외부 라이브러리를 로컬에 포함했는지 확인합니다.
+- 다른 위치로 옮긴 덱: CSS·JS·이미지의 상대 경로를 다시 검증합니다.

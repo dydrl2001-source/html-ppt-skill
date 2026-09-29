@@ -1,8 +1,15 @@
-# course-module · 教学模块
+# 학습 모듈
 
-7-slide teaching module: cover (title + meta), objectives, core concept, worked example, exercise, check-your-understanding (MCQ), summary.
+식별자: `course-module`. 기본 7장. 권장 용도: 교육·워크숍.
 
-Academic but friendly look: warm off-white paper, Playfair Display display type, a green/terracotta accent pair. A persistent **left sidebar** on content slides lists the module's learning objectives and checks them off as you progress — students always know where they are.
+학습 목표, 예시, 연습, 이해 확인.
 
-**Use when:** online course modules, lecture handouts, onboarding curricula, workshop units.
-**Feel:** a good textbook opened to a chapter — structured, quiet, encouraging.
+```bash
+bash scripts/new-deck.sh my-talk -t course-module
+```
+
+`index.html`의 내용을 바꾸고 `style.css`의 전용 클래스를 유지하세요. 기본 예시를 복사한 뒤 실제 내용과 출처로 교체합니다. 한국어 작성 시 문서에 `lang="ko"`를 지정하고 테마 및 전용 CSS 다음에 `../../../assets/korean.css`를 연결합니다. 출력 폴더에서는 생성 스크립트가 계산한 공통 파일 경로를 사용합니다.
+
+← → 페이지 이동 · S 발표자 창 · N 노트 · F 전체 화면 · O 전체 보기.
+
+[원본 설명](README.en.md) · [전체 템플릿 안내](../../../references/full-decks.md)

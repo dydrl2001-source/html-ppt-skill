@@ -1,11 +1,15 @@
-# xhs-white-editorial
+# 화이트 매거진
 
-白底杂志风、强调重点块、macaron soft-card 分组。灵感来自 `20260409 升级版知识库/小红书图文/v2-白底版/slide_01_cover.html` 的顶部彩虹条 + 大字标题，以及 `20260412-AI测试与安全/xhs-ai-testing-safety-v2.html` 的 `.focus` 黑底白字强重点和 macaron 软色卡片系统。
+식별자: `xhs-white-editorial`. 기본 8장. 권장 용도: 카드뉴스.
 
-**Visual traits:** 纯白背景、顶部 10 色彩虹条、巨型 80-110px 标题配轻微负字距、渐变 brand 文字（紫→蓝→绿→橙→粉）、macaron 软色卡（soft-purple / pink / blue / green / orange）、胶囊 tag + dot、黑底 `.focus` 强调框、hero quote box 带淡阴影。
+흰 배경, 큰 제목, 여러 강조색.
 
-**Use when:** 你需要一份能当小红书图文、也能当横屏 deck 用的白底内容帖；文字多、重点密集、需要一眼抓住关键词；面向中文读者为主。
+```bash
+bash scripts/new-deck.sh my-talk -t xhs-white-editorial
+```
 
-**Source inspiration:** `20260409` xhs v2 白底封面 + `20260412` AI 测试与安全 v2。
+`index.html`의 내용을 바꾸고 `style.css`의 전용 클래스를 유지하세요. 기본 예시를 복사한 뒤 실제 내용과 출처로 교체합니다. 한국어 작성 시 문서에 `lang="ko"`를 지정하고 테마 및 전용 CSS 다음에 `../../../assets/korean.css`를 연결합니다. 출력 폴더에서는 생성 스크립트가 계산한 공통 파일 경로를 사용합니다.
 
-**Path:** `templates/full-decks/xhs-white-editorial/index.html`
+← → 페이지 이동 · S 발표자 창 · N 노트 · F 전체 화면 · O 전체 보기.
+
+[원본 설명](README.en.md) · [전체 템플릿 안내](../../../references/full-decks.md)

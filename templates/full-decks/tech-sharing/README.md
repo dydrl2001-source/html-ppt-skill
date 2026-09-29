@@ -1,8 +1,15 @@
-# tech-sharing · 技术分享
+# 기술 공유
 
-8-slide engineering talk deck: cover (topic + speaker), agenda, context, two deep-dive slides, a code example, takeaways, Q&A.
+식별자: `tech-sharing`. 기본 8장. 권장 용도: 개발·시연.
 
-Dark GitHub-ish palette (`#0d1117`) with JetBrains Mono accents and syntax-highlighted terminal blocks. Built to be screenshotted and shared on an internal wiki or Twitter.
+코드, 설명, 시연, 질의응답.
 
-**Use when:** tech-sharing Fridays, brown-bag talks, lunch & learns, conference submissions.
-**Feel:** GitHub README meets a good conference talk — dark, monospaced, dense but readable.
+```bash
+bash scripts/new-deck.sh my-talk -t tech-sharing
+```
+
+`index.html`의 내용을 바꾸고 `style.css`의 전용 클래스를 유지하세요. 기본 예시를 복사한 뒤 실제 내용과 출처로 교체합니다. 한국어 작성 시 문서에 `lang="ko"`를 지정하고 테마 및 전용 CSS 다음에 `../../../assets/korean.css`를 연결합니다. 출력 폴더에서는 생성 스크립트가 계산한 공통 파일 경로를 사용합니다.
+
+← → 페이지 이동 · S 발표자 창 · N 노트 · F 전체 화면 · O 전체 보기.
+
+[원본 설명](README.en.md) · [전체 템플릿 안내](../../../references/full-decks.md)

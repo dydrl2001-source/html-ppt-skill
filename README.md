@@ -1,343 +1,106 @@
-# html-ppt — HTML PPT Studio
+# HTML PPT 제작 도구 — 한국어 안내
 
-> A world-class AgentSkill for producing professional HTML presentations in
-> **36 themes**, **15 full-deck templates**, **36 page layouts**,
-> **47 animations** (27 CSS + 20 canvas FX), and a **true presenter mode**
-> with pixel-perfect previews + speaker script + timer — all pure static
-> HTML/CSS/JS, no build step.
+원고와 메모를 **브라우저에서 발표하는 HTML 슬라이드**로 만드는 도구입니다. 테마 36개, 전체 발표 템플릿 16개, 개별 페이지 레이아웃 36개를 제공합니다. 방향키 이동과 발표자 노트, 타이머를 함께 사용할 수 있습니다.
 
-**Author:** lewis &lt;sudolewis@gmail.com&gt;
-**License:** MIT
-**中文文档:** [README.zh-CN.md](README.zh-CN.md)
+[한국어 추천 템플릿](templates/recommended-ko.html) · [전체 템플릿](references/full-decks.md) · [테마 36개](references/themes.md) · [제작 가이드](references/authoring-guide.md) · [English](README.en.md) · [中文原文](README.zh-CN.md)
 
-![html-ppt — cover with live previews](docs/readme/hero.gif)
+> GitHub의 HTML 파일 화면은 소스를 보여줍니다. 저장소를 내려받은 뒤 파일을 브라우저로 열면 실제 미리보기가 나옵니다. 웹 공개는 별도 작업입니다.
 
-> One command installs **36 themes × 20 canvas FX × 36 layouts × 15 full decks + presenter mode**. Every preview above is a live iframe of a real template file rendering inside the deck — no screenshots, no mock-ups.
+## 먼저 골라보기
 
-## 🎤 Presenter Mode (new!)
+| 만들 자료 | 추천 템플릿 | 추천 테마 | 선택 이유 |
+|---|---|---|---|
+| 책 요약과 독서 세미나 | `book-seminar-ko` | `editorial-serif` | 주장과 근거, 반론, 질문을 구분합니다. |
+| 학술·신학 연구 발표 | `book-seminar-ko` | `academic-paper` | 용어와 근거를 차분하게 비교합니다. |
+| 강의와 교육 | `course-module` | 템플릿 자체 배색 | 학습 목표와 연습 문제가 있습니다. |
+| 짧은 주제 강연 | `dir-key-nav-minimal` | 페이지별 자체 배색 | 큰 문장 하나에 집중합니다. |
+| 사역·주간 보고 | `weekly-report` | 템플릿 자체 배색 | 진행 내용과 다음 계획을 설명합니다. |
+| 발표 노트가 중요한 강연 | `presenter-mode-reveal` | `editorial-serif` 또는 `tokyo-night` | 발표자 화면을 사용하며 말할 수 있습니다. |
 
-Press `S` on any deck to pop open a dedicated presenter window with four
-draggable, resizable **magnetic cards**: current slide, next slide preview,
-speaker script (逐字稿), and timer. Two windows stay in sync via
-`BroadcastChannel`.
+**템플릿과 테마는 다릅니다.** 템플릿은 페이지 구성과 전용 배치, 테마는 색상과 글꼴 등의 공통 설정입니다. 일부 전체 템플릿은 자체 색상을 고정하므로 테마 파일만 바꿔도 모든 색상이 변하는 것은 아닙니다.
 
-![Presenter mode with 4 magnetic cards](docs/readme/presenter-mode.png)
-
-**Why previews are pixel-perfect:** each card is an `<iframe>` that loads the
-same deck HTML with a `?preview=N` query param. The runtime detects this and
-renders only slide N with no chrome — so the preview uses the **same CSS,
-theme, fonts and viewport** as the audience view. Colors and layout are
-guaranteed identical.
-
-**Smooth (no-reload) navigation:** on slide change, the presenter window
-sends `postMessage({type:'preview-goto', idx:N})` to each iframe. The iframe
-just toggles `.is-active` between slides — **no reload, no flicker**.
-
-**Speaker script rules (3 golden):**
-1. **Prompt signals, not lines to read** — bold the keywords, separate
-   transition sentences into their own paragraphs
-2. **150–300 words per slide** — that's the ~2–3 min/page pace
-3. **Write it like you speak** — conversational, not written prose
-
-See [`references/presenter-mode.md`](references/presenter-mode.md) for the
-full authoring guide, or copy the ready-made template at
-`templates/full-decks/presenter-mode-reveal/` which ships with full 150-300
-word speaker scripts on every slide.
-
-## Install (one command)
+## 바로 시작하기
 
 ```bash
-npx skills add https://github.com/lewislulu/html-ppt-skill
+git clone https://github.com/dydrl2001-source/html-ppt-skill.git
+cd html-ppt-skill
+
+# 기본 한국어 발표자료
+bash scripts/new-deck.sh my-talk
+
+# 한국어 독서 세미나 8장
+bash scripts/new-deck.sh book-talk -t book-seminar-ko
+
+# 브라우저에서 열기 (macOS)
+open examples/book-talk/index.html
+open templates/recommended-ko.html
 ```
 
-That registers the skill with your agent runtime. After install, any agent
-that supports AgentSkills can author presentations by asking things like:
+다른 폴더에 만들려면 `bash scripts/new-deck.sh book-talk ./my-decks -t book-seminar-ko`처럼 출력 상위 폴더를 지정합니다. 파일명과 템플릿 식별자는 영어 그대로 사용합니다. 생성 스크립트가 공통 파일 경로를 계산하므로 경로의 `../`를 임의로 고치지 마세요.
 
-> "做一份 8 页的技术分享 slides，用 cyberpunk 主题"
-> "turn this outline into a pitch deck"
-> "做一个小红书图文，9 张，白底柔和风"
+## AI 도구에 스킬 등록하기
 
-## Offline / manual install
-
-`npx skills add <url>` needs network on the target machine. Three alternatives,
-in decreasing order of how much network they need.
-
-**1. Install from a local copy.** Fetch the repo anywhere, move the folder over
-(git, zip, USB), then point the CLI at the directory instead of the URL:
+AgentSkills를 지원하는 도구에서는 아래 명령으로 이 저장소를 등록할 수 있습니다. 설치 명령은 네트워크 연결과 Node.js가 필요합니다.
 
 ```bash
-git clone https://github.com/lewislulu/html-ppt-skill
-npx skills add ./html-ppt-skill
+npx skills add https://github.com/dydrl2001-source/html-ppt-skill
 ```
 
-`npx` still downloads the `skills` package itself once. For a fully air-gapped
-machine, run `npm i -g skills` on a connected one first, or use method 2.
+이미 내려받았다면 해당 저장소 폴더를 로컬 설치 대상으로 지정할 수도 있습니다. 설치 없이도 HTML 예제는 브라우저에서 열 수 있습니다. 이 저장소를 고치는 것과 컴퓨터에 스킬을 설치하는 것은 별도 작업입니다.
 
-**2. Copy it in by hand — no Node, no CLI.** A skill is just a folder with
-`SKILL.md` at its root. Drop it in the directory your agent scans:
+## AI에게 이렇게 요청하세요
 
-| Agent | Project scope | Global scope |
-|---|---|---|
-| Claude Code | `.claude/skills/html-ppt/` | `~/.claude/skills/html-ppt/` |
-| Codex | `.agents/skills/html-ppt/` | `~/.codex/skills/html-ppt/` |
-| Cursor | `.agents/skills/html-ppt/` | `~/.cursor/skills/html-ppt/` |
-| OpenCode | `.agents/skills/html-ppt/` | `~/.config/opencode/skills/html-ppt/` |
-| Gemini CLI | `.agents/skills/html-ppt/` | `~/.gemini/skills/html-ppt/` |
-| Windsurf | `.windsurf/skills/html-ppt/` | `~/.codeium/windsurf/skills/html-ppt/` |
+> 이 자료를 한국어 발표 슬라이드로 만들어줘. 먼저 청중, 발표 시간, 핵심 질문과 어울리는 템플릿을 추천해줘. 내가 추천대로 진행하라고 하면 추가 확인 없이 만들어줘. 화면에는 핵심 논점만 넣고 설명은 발표자 노트에 넣어줘. 저자의 주장, 원문 인용, 네가 추가한 해석을 구분해줘.
 
-```bash
-mkdir -p ~/.claude/skills
-cp -R html-ppt-skill ~/.claude/skills/html-ppt
-ls ~/.claude/skills/html-ppt/SKILL.md      # must exist
-```
+이미 제작 방향을 맡겼다면 AI는 청중·분량·테마에 대한 합리적인 가정을 밝히고 진행합니다. 모든 항목에 매번 답할 필요는 없습니다. 실제로 확인하지 않은 내용이나 쪽수를 만들어 넣지 않습니다.
 
-Only `SKILL.md`, `assets/`, `templates/`, `references/` and `scripts/` are
-needed at runtime. `docs/` is ~4.6 MB of README artwork and can be dropped from
-an offline copy.
+## 단축키
 
-**3. No agent at all.** The templates are plain static files — usable directly:
-
-```bash
-./scripts/new-deck.sh my-talk
-open examples/my-talk/index.html
-```
-
-### Does it run without a network?
-
-Yes, with one caveat. Themes, layouts, animations, presenter mode and PNG
-rendering are all local static HTML/CSS/JS with no build step and no runtime
-fetches. The single remote dependency is `assets/fonts.css`, which `@import`s
-Google Fonts.
-
-Offline, those imports simply fail and the browser falls back to the system
-stack already declared in `assets/base.css` (`-apple-system` / Helvetica /
-Georgia / Menlo), so decks render correctly — just in different typefaces. To
-pin typography offline, replace `assets/fonts.css` with `@font-face` rules
-pointing at font files you ship yourself, or delete the imports and accept the
-system stack.
-
-## What's in the box
-
-| | Count | Where |
-|---|---|---|
-| 🎤 **Presenter mode** | **NEW** | `S` key / `?preview=N` |
-| 🎨 **Themes** | **36** | `assets/themes/*.css` |
-| 📑 **Full-deck templates** | **15** | `templates/full-decks/<name>/` |
-| 🧩 **Single-page layouts** | **36** | `templates/single-page/*.html` |
-| ✨ **CSS animations** | **27** | `assets/animations/animations.css` |
-| 💥 **Canvas FX animations** | **20** | `assets/animations/fx/*.js` |
-| 🖼️ **Showcase decks** | 4 | `templates/*-showcase.html` |
-| 📸 **Verification screenshots** | 56 | `scripts/verify-output/` |
-
-### 36 Themes
-
-`minimal-white`, `editorial-serif`, `soft-pastel`, `sharp-mono`, `arctic-cool`,
-`sunset-warm`, `catppuccin-latte`, `catppuccin-mocha`, `dracula`, `tokyo-night`,
-`nord`, `solarized-light`, `gruvbox-dark`, `rose-pine`, `neo-brutalism`,
-`glassmorphism`, `bauhaus`, `swiss-grid`, `terminal-green`, `xiaohongshu-white`,
-`rainbow-gradient`, `aurora`, `blueprint`, `memphis-pop`, `cyberpunk-neon`,
-`y2k-chrome`, `retro-tv`, `japanese-minimal`, `vaporwave`, `midcentury`,
-`corporate-clean`, `academic-paper`, `news-broadcast`, `pitch-deck-vc`,
-`magazine-bold`, `engineering-whiteprint`.
-
-![36 themes · 8 of them](docs/readme/themes.png)
-
-Each is a pure CSS-tokens file — swap one `<link>` to reskin the entire deck.
-Browse them all in `templates/theme-showcase.html` (each slide rendered in an
-isolated iframe so theme ≠ theme is visually guaranteed).
-
-![15 full-deck templates](docs/readme/templates.png)
-
-### 15 Full-deck templates
-
-Eight extracted from real-world decks, seven generic scenario scaffolds:
-
-**Extracted looks**
-- `xhs-white-editorial` — 小红书白底杂志风
-- `graphify-dark-graph` — 暗底 + 力导向知识图谱
-- `knowledge-arch-blueprint` — 蓝图 / 架构图风
-- `hermes-cyber-terminal` — 终端 cyberpunk
-- `obsidian-claude-gradient` — 紫色渐变卡
-- `testing-safety-alert` — 红 / 琥珀警示风
-- `xhs-pastel-card` — 柔和马卡龙图文
-- `dir-key-nav-minimal` — 方向键极简
-
-**Scenario decks**
-- `pitch-deck`, `product-launch`, `tech-sharing`, `weekly-report`,
-  `xhs-post` (9-slide 3:4), `course-module`,
-  **`presenter-mode-reveal`** 🎤 — complete talk template with full 150-300
-  word speaker scripts on every slide, designed around the `S` key presenter mode
-
-Each is a self-contained folder with scoped `.tpl-<name>` CSS so multiple
-decks can be previewed side-by-side without collisions. Browse the full
-gallery in `templates/full-decks-index.html`.
-
-![31 single-page layouts](docs/readme/layouts.png)
-
-### 36 Single-page layouts
-
-cover · toc · section-divider · bullets · two-column · three-column ·
-big-quote · stat-highlight · kpi-grid · table · code · diff · terminal ·
-flow-diagram · timeline · roadmap · mindmap · comparison · pros-cons ·
-todo-checklist · gantt · image-hero · image-grid · chart-bar · chart-line ·
-chart-pie · chart-radar · arch-diagram · process-steps · cta · thanks
-
-Every layout ships with realistic demo data so you can drop it into a deck
-and immediately see it render.
-
-![36 layouts auto-cycling through real template files](docs/readme/layouts-live.gif)
-
-*The big iframe is loading `templates/single-page/<name>.html` directly and cycling through all 36 layouts every 2.8 seconds.*
-
-![47 animations — 27 CSS + 20 canvas FX](docs/readme/animations.png)
-
-### 27 CSS animations + 20 Canvas FX
-
-**CSS (lightweight)** — directional fades, `rise-in`, `zoom-pop`, `blur-in`,
-`glitch-in`, `typewriter`, `neon-glow`, `shimmer-sweep`, `gradient-flow`,
-`stagger-list`, `counter-up`, `path-draw`, `morph-shape`, `parallax-tilt`,
-`card-flip-3d`, `cube-rotate-3d`, `page-turn-3d`, `perspective-zoom`,
-`marquee-scroll`, `kenburns`, `ripple-reveal`, `spotlight`, …
-
-**Canvas FX (cinematic)** — `particle-burst`, `confetti-cannon`, `firework`,
-`starfield`, `matrix-rain`, `knowledge-graph` (force-directed physics),
-`neural-net` (signal pulses), `constellation`, `orbit-ring`, `galaxy-swirl`,
-`word-cascade`, `letter-explode`, `chain-react`, `magnetic-field`,
-`data-stream`, `gradient-blob`, `sparkle-trail`, `shockwave`,
-`typewriter-multi`, `counter-explosion`. Each is a real hand-rolled canvas
-module auto-initialised on slide enter via `fx-runtime.js`.
-
-## Quick start (manual, after install or git clone)
-
-```bash
-# Scaffold a new deck from the base template
-./scripts/new-deck.sh my-talk
-
-# ...or from a full-deck template, into any directory you like.
-# Asset paths are computed for wherever the deck lands, then verified.
-./scripts/new-deck.sh my-talk ~/decks -t pitch-deck
-
-# Browse everything
-open templates/theme-showcase.html         # all 36 themes (iframe-isolated)
-open templates/layout-showcase.html        # all 36 layouts
-open templates/animation-showcase.html     # all 47 animations
-open templates/full-decks-index.html       # all 15 full decks
-
-# Render any template to PNG via headless Chrome
-./scripts/render.sh templates/theme-showcase.html
-./scripts/render.sh examples/my-talk/index.html 12
-```
-
-## Images on a slide
-
-Five layouts take real images — pick by how many the page has to carry:
-
-| I have… | Layout |
+| 키 | 기능 |
 |---|---|
-| one screenshot / diagram / chart | `image-single.html` — letterboxed, never cropped |
-| one photo that should carry the page | `image-full-bleed.html` — fills the slide, scrim keeps the title readable |
-| one image plus an argument | `image-text-split.html` — 50/50, `flip` to swap sides |
-| 3–6 images | `image-gallery.html` — uniform grid, one caption each |
-| a before and an after | `image-compare.html` — both sides identical size |
+| ← / → / Space / PageUp / PageDown | 페이지 이동 |
+| Home / End | 첫 페이지 / 마지막 페이지 |
+| F | 전체 화면 |
+| S | 발표자 창 열기: 현재 페이지, 다음 페이지, 노트, 타이머 |
+| N | 현재 페이지 노트 보기 |
+| O | 전체 슬라이드 보기 |
+| T | 미리 지정한 테마 순환 |
+| A | 현재 페이지의 시연 효과 변경 |
+| R | 발표자 창에서 타이머 초기화 |
+| Esc | 열린 보기 또는 발표자 창 닫기 |
 
-They share one primitive from `assets/base.css`:
+휴대전화에서는 좌우로 밀어 이동할 수 있습니다. 발표자 창이 열리지 않으면 브라우저의 팝업 허용을 확인하세요. 한국어 덱은 `<html lang="ko">`로 지정하면 발표자 화면도 한국어로 표시합니다. 영어와 중국어 UI도 유지합니다.
 
-```html
-<figure class="img-frame"><img src="shot.png" alt=""></figure>          <!-- crops to fill -->
-<figure class="img-frame contain"><img src="diagram.svg" alt=""></figure> <!-- letterboxed -->
-```
+## 한국어 글꼴과 배치
 
-The frame owns the aspect ratio (`--img-ratio`) and the crop, so you can drop in
-a portrait, square or ultrawide image without touching the layout. Placeholder
-artwork in `assets/demo-images/` is hand-written SVG (~1 KB each) so every
-layout renders **offline**.
-
-## Custom logo
-
-Brand a deck with one attribute — no per-slide `<img>` copy-paste:
+테마 CSS 다음에 `assets/korean.css`를 연결합니다. 한국어 기본 틀에는 이미 포함되어 있습니다. 이 파일은 한국어 시스템 글꼴과 어절 단위 줄바꿈을 사용하고, 제목의 과한 기울임을 해제합니다. 추가 글꼴 다운로드는 필요하지 않습니다.
 
 ```html
-<body data-logo="logo.svg" data-logo-position="bottom-right" data-logo-size="40px">
+<html lang="ko">
+<!-- base.css, theme CSS 다음 -->
+<link rel="stylesheet" href="../assets/korean.css">
 ```
 
-`data-logo-position` takes `top-left` / `top-right` / `bottom-left` /
-`bottom-right` (default `top-right`); `data-logo-size` sets the height.
-Skip it on a single slide with `<section class="slide" data-no-logo>` — handy
-for the cover. The logo also shows in the presenter preview, and on **every
-page** of a PDF export (skipping the `data-no-logo` ones).
+macOS에서는 Apple SD Gothic Neo, Windows에서는 맑은 고딕 등을 사용합니다. 다른 기기에서는 글꼴과 줄바꿈이 달라질 수 있으므로 실제 발표 기기에서 확인하세요. 기존 외국어 시연 자료의 본문은 원문을 유지합니다. 한국어 기본 틀·독서 세미나·발표자 모드 예제와 한국어 추천 갤러리를 시작점으로 사용하세요.
 
-Prefer to place it yourself? `<img class="deck-logo" data-pos="top-left" src="logo.svg">`
-inside `.deck` works with no JS at all.
+## 이미지·PDF·PowerPoint
 
-## Keyboard cheat sheet
+- **HTML**: 이 저장소의 기본 결과물입니다. 브라우저 발표와 발표자 화면을 지원합니다.
+- **PNG**: macOS의 Google Chrome이 있으면 `bash scripts/render.sh examples/book-talk/index.html all`로 출력합니다. 다른 환경에서는 브라우저 설치 경로를 조정해야 합니다.
+- **PDF**: 브라우저의 인쇄에서 PDF로 저장할 수 있습니다. 미리보기에서 페이지 수와 잘림을 확인하세요.
+- **편집 가능한 PPTX**: 이 저장소에는 내장 변환기가 없습니다. 별도의 PowerPoint 생성 도구가 필요합니다. PNG를 PPT에 넣으면 글자가 개별 편집 가능한 텍스트로 바뀌지 않습니다.
 
-On a phone or tablet, **swipe left for the next slide, right for the previous
-one** — no keyboard needed. Pinch-zoom, vertical scrolling, the overview grid
-and the notes drawer are left alone.
+기본 화면 크기는 1920×1080입니다. 생성된 HTML은 공통 `assets/`를 참조하므로 HTML 파일 하나만 다른 컴퓨터로 보내면 안 됩니다. 저장소의 관련 폴더 구조를 함께 보내거나 공통 파일을 포함하도록 별도 패키징하세요.
 
-```
-← → Space PgUp PgDn Home End   navigate
-swipe ← / →  (touch)           navigate
-F                               fullscreen
-S                               open presenter window (magnetic cards)
-N                               quick notes drawer (bottom)
-R                               reset timer (in presenter window)
-O                               slide overview grid
-T                               cycle themes (syncs to presenter)
-A                               cycle a demo animation on current slide
-#/N (URL)                       deep-link to slide N
-?preview=N (URL)                preview-only mode (single slide, no chrome)
-```
+## 오프라인 사용 범위
 
-## Project structure
+기본 HTML·발표자 모드와 한국어 시스템 글꼴은 로컬 파일로 동작합니다. `fonts.css`의 기존 Google Fonts, 일부 차트 예제의 Chart.js, 코드 예제의 highlight.js는 외부 연결을 사용할 수 있습니다. 완전한 오프라인 발표가 필요하면 해당 파일을 로컬로 포함하거나 의존성이 없는 레이아웃을 선택하세요.
 
-```
-html-ppt-skill/
-├── SKILL.md                      agent-facing dispatcher
-├── README.md                     this file
-├── references/                   detailed catalogs
-│   ├── themes.md                 36 themes with when-to-use
-│   ├── layouts.md                31 layout types
-│   ├── animations.md             27 CSS + 20 FX catalog
-│   ├── full-decks.md             15 full-deck templates
-│   └── authoring-guide.md        full workflow
-├── assets/
-│   ├── base.css                  shared tokens + primitives
-│   ├── fonts.css                 webfont imports
-│   ├── runtime.js                keyboard + presenter + overview
-│   ├── themes/*.css              36 theme token files
-│   └── animations/
-│       ├── animations.css        27 named CSS animations
-│       ├── fx-runtime.js         auto-init [data-fx] on slide enter
-│       └── fx/*.js               20 canvas FX modules
-├── templates/
-│   ├── deck.html                 minimal starter
-│   ├── theme-showcase.html       iframe-isolated theme tour
-│   ├── layout-showcase.html      all 36 layouts
-│   ├── animation-showcase.html   47 animation slides
-│   ├── full-decks-index.html     15-deck gallery
-│   ├── full-decks/<name>/        15 scoped multi-slide decks
-│   └── single-page/*.html        31 layout files with demo data
-├── scripts/
-│   ├── new-deck.sh               scaffold
-│   ├── render.sh                 headless Chrome → PNG
-│   └── verify-output/            56 self-test screenshots
-└── examples/demo-deck/           complete working deck
-```
+## 문서와 원본
 
-## Philosophy
+- [AI 제작 규칙](SKILL.md)
+- [테마](references/themes.md) / [전체 템플릿](references/full-decks.md) / [개별 레이아웃](references/layouts.md)
+- [발표자 화면](references/presenter-mode.md) / [애니메이션](references/animations.md)
+- [원본 문서 보관](docs/original/)
 
-- **Token-driven design system.** All color, radius, shadow, font decisions
-  live in `assets/base.css` + the current theme file. Change one variable,
-  the whole deck reflows tastefully.
-- **Iframe isolation for previews.** Theme / layout / full-deck showcases all
-  use `<iframe>` per slide so each preview is a real, independent render.
-- **Zero build.** Pure static HTML/CSS/JS. CDN only for webfonts, highlight.js
-  and chart.js (optional).
-- **Senior-designer defaults.** Opinionated type scale, spacing rhythm,
-  gradients and card treatments — no "Corporate PowerPoint 2006" vibes.
-- **Chinese + English first-class.** Noto Sans SC / Noto Serif SC pre-imported.
-
-## License
-
-MIT © 2026 lewis &lt;sudolewis@gmail.com&gt;.
+원본 프로젝트: [lewislulu/html-ppt-skill](https://github.com/lewislulu/html-ppt-skill). 원저작자 lewis. MIT 라이선스는 [LICENSE](LICENSE)를 따릅니다. 이 저장소에는 한국어 안내와 사용성 보완을 추가했습니다.
